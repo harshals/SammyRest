@@ -50,13 +50,11 @@ $.sammy('#content' , function() {
 
 	this.get('#/artist/search', function(context) {
 
-		this.partial('views/artist/search.jshtml');
+		this.partial('views/default/artist_search.tt');
     });
 
 	this.post('#/artist/search', function(context) {
 
-		this.artist = Artist.find_by_title_content(this.params['title'], this.params['content']).collection;
-		
 		this.partial('views/artist/index.jshtml');
     });
 

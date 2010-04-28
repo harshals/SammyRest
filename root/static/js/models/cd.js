@@ -1,7 +1,7 @@
 
 
 
-Class('Artist', {
+Class('Cd', {
 
 	isa : DbEntity ,
 	
