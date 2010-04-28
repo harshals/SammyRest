@@ -74,10 +74,21 @@ Class('DbEntity', {
 				this.xhr('DELETE', this.url + "/" + id);
 
 				return this.message;
-			}
+			},
 			isNew : function() {
 				return defined (this.data[ this.pk ]);
-			}
+			},
+            templateVars : function(type) {
+                
+                var tvars = {};
+                var name = this.meta.name.toLowerCase();
+
+                tvars[name] = {};
+                
+                tvars[name] = (type == 'list') ?  { 'list' : this.list } :  this.data ;
+
+                return tvars;
+            }
 		}
 
 });

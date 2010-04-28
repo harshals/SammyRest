@@ -2,50 +2,62 @@
 $.sammy('#content' , function() {
   	
 
-	this.get('#/artist', function(c) {
+	this.get(/\#\/(artist|cd)$/, function(c) {
 
-		//Artist.my.url = "/api/rest/artist";
+        var model = c.params.splat.pop();
+        
+        // template = "views/default/artist_list.tt2"
+        var template = main.view + model + "_list.tt";
 
-		main.artist.all();
-		
-		this.process('views/default/artist_list.tt', { artist : main.artist.list });
+        main.models[model].all();
+
+		this.process(template, main.models[model].templateVars("list") );
 	});
 
-	this.get('#/artist/edit/:id', function(c){
+	this.get(/\#\/(artist)\/edit\/(.*)/, function(c){
         
-        main.artist.find(this.params["id"]);
+        var model = c.params.splat.shift();
+        var id = c.params.splat.pop();
+        main.models[model].find(id);
+        
+        var template = main.view + model + "_edit.tt";
 		
-		this.process('views/default/artist_edit.tt' , { artist: main.artist.data } );
+		this.process(template , main.models[model].templateVars("edit") );
 	});
 
-	this.get('#/artist/delete/:id', function(c){
+	this.get(/\#\/(artist|cd)\/delete\/(.*)/, function(c){
         
-		main.artist.remove(c.params["id"]);
+        var model = c.params.splat.shift();
+        var id = c.params.splat.pop();
+        main.models[model].remove(id);
 
-        if (main.artist.errors.length) {
+        if (main.models[model].errors.length) {
             alert("got errors");
         }
-		this.redirect("#/artist");
+		this.redirect("#/" + model);
 	});
 
 
-	this.get('#/artist/new', function(context) {
+	this.get(/\#\/(artist|cd)\/new/, function(c){
 		
-		this.process('views/default/artist_edit.tt' );
+        var model = c.params.splat.shift();
+        var template = main.view + model + "_edit.tt";
+		this.process(template , {});
 	});
 	
-	this.post('#/artist', function(c) {
+	this.post(/\#\/(artist|cd)$/, function(c) {
 		
 		delete c.params.$form;
 
-        main.artist.data = c.params.toHash();
+        var model = c.params.splat.shift();
+        main.models[model].data = c.params.toHash();
 
-	    main.artist.save();
+	    main.models[model].save();
 
-        if (main.artist.errors.length) {
+        if (main.models[model].errors.length) {
             alert("got errors");
         }
-		main.runRoute("get", "#/artist");
+		main.runRoute("get", "#/" + model);
 	});
 
 	this.get('#/artist/search', function(context) {

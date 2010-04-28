@@ -15,7 +15,9 @@
 	*/
 	 this.firm = "caselog";
 	 this.baseUrl = "/api/rest/";
-	 this.artist = {};
+	 this.models = {};
+     this.view = "views/default/";
+     this.tvars = {};
 
 	 this.get("#/", function(c){
 
@@ -29,7 +31,12 @@
 	});
 	this.get("#/home", function(c){
 		
-		main.artist = new Artist( { pk : 'artistid',  url: main.baseUrl + "artist" });
+        // initialize all the models here
+		main.models["artist"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "artist" });
+		main.models["cd"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "cd" });
+
+        //initialize their templates
+
 		c.swap("Welcome to caselog from main");
 	});
 
