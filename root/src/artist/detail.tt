@@ -1,0 +1,50 @@
+<table id="company" class="shortlist">
+		<thead>
+			<tr>
+				<th colspan="2" class="table-head"> <a href="#" id="toggle-forms">JJ Polyplast Inc</a>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<th>Office Address</th>
+			<td >418 Arun Chambers, Tardeo, Mumbai 36</td>
+		</tr>
+		<tr>
+			<th>Contact Person</th>
+			<td >Harshal Shah</td>
+		</tr>
+		<tr>
+			<th>Contact No.</th>
+			<td >98323123012</td>
+		</tr>
+		<tr>
+			<th>Outstanding</th>
+			<td class="currency">12312364.00</td>
+		</tr>
+		<tr>
+			<th>Overdue by</th>
+			<td >30 days</td>
+		</tr>
+		</tbody>
+		<tfoot>
+			<tr >
+				<td colspan=2> <button class="button" >Print </button> 
+				<button class="button" type=submit >Open</button>
+				<button class="button" type=submit >Email</button></td>
+			</tr>
+			<tr >
+				<td colspan=2><span class="help">Make Sale from this Invoice</span></th>
+			</tr>
+			<tr >
+				<td colspan=2><span class="help">Show Sales made from this Invoice</span></th>
+			</tr>
+			<tr >
+				<td colspan=2><span class="help">Duplicate this Invoice</span></th>
+			</tr>
+		</tfoot>
+</table>
+
+
+
+

@@ -1,0 +1,18 @@
+	
+    [% PROCESS contact/form.tt %]
+
+<form action="#/contact/put" method="POST" >
+
+	<input type=hidden name="id" value="[% contact.id %]"/>
+	<fieldset >
+            
+            [% INCLUDE "contact/form/b1" %]
+            [% INCLUDE "contact/form/b2" %]
+
+    </fieldset>
+    <input type=submit value="Hit me"/>
+</form>
+<form action="#/contact/delete" method="POST" >
+	<input type=hidden name="id" value="[% contact.id %]"/>
+    <input type=submit value="Delete"/>
+</form>

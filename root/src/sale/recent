@@ -1,0 +1,15 @@
+<div class="box" id="list-items">
+
+				<h2>
+					<a href="#" id="toggle-section-menu">Recent Sale Invoices</a>
+				</h2>
+                <p>You can make a duplicate copy from one of the recent invoices </p>
+                <ul class="menu" id="section-menu">
+	[% FOREACH invoice IN c.model("DemoDB::Sale").recent %]
+<li>
+<a href="[% IF duplicate %]#[% ELSE %][% c.uri_for("/sale/get/$invoice.id") %][% END %]">No. [% invoice.invoice_no %] dated [% invoice.invoice_date %], [% invoice.buyer.name %], [% invoice.quantity %] MT</a>
+</li>
+	[% END %]
+ 
+               </ul>
+</div>

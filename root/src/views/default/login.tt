@@ -1,0 +1,43 @@
+<form action="[% c.uri_for("/check") %]" method="POST">
+	<fieldset class="login">
+		<legend>Login</legend>
+		[% UNLESS c.user_exists %]
+		<p >
+			<label>Email: </label>
+			<input type="text" name="email" value="guest" />
+		</p>
+		<p >
+			<label>Password: </label>
+			<input type="password" name="password" value="guest" />
+		</p>
+		<p >
+			<label>Mode: </label>
+			<select name="mode" value="">
+			
+				<option selected value="default">Single Page Application using Ajax with server side templates</option>
+				<option value="jemplate">Single Page Application using REST with client side templates</option>
+				<option value="mobile">Single Page Mobile Application using Ajax with server side templates</option>
+				<option value="mjemplate">Single Page Mobile Application using Ajax with client side templates</option>
+				<option value="cgi">Multi Page Application (no Ajax) with server side templates</option>
+
+			</select>
+		</p>
+	
+		<p>
+			[% IF message %] [% message %] [% END %]
+		</p>
+
+		<input type=submit value="Login" />
+		<input type=reset value="Reset" />
+		<p>
+			<span class=help>Forgot Password ?</span>
+			<a style="display:inline;" class=help href="[% c.uri_for("/register") %]">Click here to register</a>
+			<span class=error>[% c.stash.recpatcha_error %]</span>
+		</p>
+		[% ELSE %]
+
+			<a href="[% c.uri_for("/logout") %]"> Logout</a>
+		[% END %]
+	</fieldset>
+</form>
+

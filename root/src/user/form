@@ -1,0 +1,36 @@
+<h2>
+<a href="#" id="toggle-forms">Change password</a>
+</h2>
+<form  action="[% c.uri_for("/user/put") %]" class="new_user" target="user_id" method="POST">
+
+<fieldset >
+<legend>User Information</legend>
+<input type=hidden name="id" value="[% user.id %]" />
+<input type=hidden id = "oldpassword1" name="oldpassword1" value="[% user.password %]" />
+<p>
+	<label>name: </label>
+	<input type="text" name="username" value="[% user.username %]" class="required"/>
+</p>
+<p>
+	<label>Old Password : </label>
+	<input type="password" id ="oldpassword" name="oldpassword"  class="required"/>
+</p>
+<p>
+	<label>New Password : </label>
+	<input type="password" id = "password" name="password"  class="required"/>
+</p>
+<p>
+	<label>Confirm Password : </label>
+	<input type="password" id = "password_again" name="password_again"  class="required"/>
+</p>
+
+<p>
+	<label>Description: </label>
+	<input type="text" name="description" value="[% user.description %]"/>
+</p>
+<button class="button" type="submit" >Add</button>
+<button class="button" type="reset" >Cancel </button>
+</fieldset>
+
+</form>
+

@@ -1,0 +1,26 @@
+<table >
+    <thead>
+        <tr>
+            <th colspan="7" class="table-head">List of Artists</th>
+        </tr>
+
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        [% FOREACH row IN artist.list %]
+        <tr>
+            <td>[% row.artistid %]</td>
+            <td>[% row.name%]</td>
+            <th >
+            <a href="#[% "/artist/delete/$row.artistid" %]">Del</a>
+            <a href="#[% "/artist/edit/$row.artistid" %]">Edit</a>
+            </th>
+        </tr>
+        [% END %]
+    </tbody>
+</table>
+

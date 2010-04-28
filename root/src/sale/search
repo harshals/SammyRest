@@ -1,0 +1,48 @@
+<div class="box"> <!-- begin form box -->
+<h2>
+		<a href="#" id="toggle-forms">Search Sales</a>
+		[% type = type || 0 %]
+	</h2>
+	<form action="[% c.uri_for("/sale/$type/search") %]" class="search" id="forms" method="POST">
+		<fieldset >
+			<p>
+				<label>Invoice No: </label>
+				<input type="text" name="invoice_no" value="" />
+				<span class="help"> for eg. 55-60, to search for range</span>
+			</p>
+			<p>
+				<label>From Date: </label>
+				<input type="text" name="from_date" />
+			</p>
+			<p>
+				<label>To Date: </label>
+				<input type="text" name="to_date" />
+			</p>
+			<p>
+				<label>Consignee: </label>
+				<select name="consignee_id" >
+				<option value=""> Choose Consignee</option>
+				[% INCLUDE company/select %]
+				</select>
+			</p>
+			<p>
+				<label>Product: </label>
+				<select name="product_id" >
+                	<option value=""> Choose Product </option>
+                [% FOREACH product IN c.model("DemoDB::Product").all %]
+                    <option value="[% product.id %]" >
+                        [% product.name %]
+                    </option>
+                [% END %]
+                </select>
+			</p>
+			
+			<p>
+				<label>Search Cancelled?: </label>
+				<input type=radio name="is_cancelled" value="1" >Yes</input>
+				<input type=radio name="is_cancelled" value="" checked >No</input>
+			</p>
+			<button class="button" type="submit"> Search Sale Invocies</button>
+		</fieldset>
+	</form>
+</div>

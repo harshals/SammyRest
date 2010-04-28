@@ -1,0 +1,51 @@
+<table class="invoice" id="sale">
+                        <thead>
+							<tr>
+								<th colspan="2" class="table-head"> <a href="#" id="toggle-forms">Invoice No</a>
+                                </th>
+							</tr>
+                       	</thead>
+                        <tbody>
+                        <tr>
+                            <th>Date</th>
+                            <td >25/7/2009</td>
+                        </tr>
+                        <tr>
+                            <th>Product</th>
+                            <td >PVC Resin</td>
+                        </tr>
+                        <tr>
+                            <th>Warehouse</th>
+                            <td >$200.00</td>
+                        </tr>
+                        <tr>
+                            <th>Cenvat</th>
+                            <td class="currency">$64.00</td>
+                        </tr>
+                        <tr>
+                            <th>Education Cess</th>
+                            <td class="currency">$36.00</td>
+                        </tr>
+                        <tr>
+                            <th>Education Cess</th>
+                            <td class="currency">$36.00</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr >
+                                <td colspan=2> <button class="button" >Print </button> 
+								<button class="button" type=submit >Open</button>
+								<button class="button" type=submit >Email</button></td>
+                            </tr>
+                            <tr >
+							    <td colspan=2><span class="help">Make Sale from this Invoice</span></th>
+                            </tr>
+                            <tr >
+							    <td colspan=2><span class="help">Show Sales made from this Invoice</span></th>
+                            </tr>
+                            <tr >
+							    <td colspan=2><span class="help">Duplicate this Invoice</span></th>
+                            </tr>
+                        </tfoot>
+</table>
+

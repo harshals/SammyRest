@@ -1,0 +1,85 @@
+[%# INCLUDE pager_head %]
+<table summary="This table includes examples of as many table elements as possible">
+<caption></caption>
+<colgroup>
+	<col class="colA" />
+	<col class="colB" />
+	<col class="colC" />
+	<col class="colD" />
+	<col class="colE" />
+	<col class="colF" />
+        <col class="colG" />	
+</colgroup>
+<thead>
+	<tr>
+		<th colspan="7" class="table-head">List of Sale Invoice</th>
+	</tr>
+	<tr>
+		<th>Invoice No</th>
+		<th>Buyer</th>
+		<th>Product</th>
+		<th>Quantity</th>
+		<th class="currency">Cenvat</th>
+		<th class="currency">Amount</th>
+		<th >Action</th>
+
+	</tr>
+</thead>
+<tbody>
+        [% total_cenvat = 0 %]
+        [% total_amount = 0 %]
+        [% total_quantity = 0 %]
+		[% IF type %]
+
+        [% subtotal_cenvat = 0 %]
+        [% subtotal_amount = 0 %]
+        [% subtotal_quantity = 0 %]
+		[% prev = '' %]
+		[% END %]
+
+        [% FOREACH row IN sale_rs %]
+	
+[% USE date %]
+[% to_date = row.invoice_date %]
+[% manip = date.manip %]
+[% invoice_date = manip.UnixDate(manip.ParseDate(to_date),'%d-%m-%Y') %]
+	
+	[% IF c.req.param("is_cancelled") %]
+		[% NEXT UNLESS row.is_cancelled %]
+	[% ELSE %]
+		[% NEXT IF row.is_cancelled %]
+	[% END %]
+
+        <tr >
+            <td>[% row.invoice_no %]/[% invoice_date %]</td>
+            <td>[% row.consignee.name %]</td>
+            <td>[% row.product.name %]</td>
+            <td>[% row.quantity %] [% row.uom %]</td>
+            <th class="currency">[% row.cenvat %]</th>
+            <th class="currency">[% row.total_invoice_amount %]</th>
+            <th ></span>
+            <a href="[% c.uri_for("/sale/get/$row.id") %]">&nbsp;Edit</a>
+	    <a href="[% c.uri_for("/sale/publish/$row.id") %]">&nbsp;Print</a>
+	    </th>
+        </tr>
+        [% total_cenvat = total_cenvat + row.cenvat %]
+        [% total_amount = total_amount + row.total_invoice_amount %]
+        [% total_quantity = total_quantity + row.quantity %]
+	
+	[% END %]
+ 
+</tbody>
+<tfoot>
+	<tr class="total">
+		<th>Total</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<th class="currency">[% total_cenvat %]</th>
+		<th class="currency">[% total_amount %]</th>
+		<th ></th>
+	</tr>
+</tfoot>
+
+</table>
+

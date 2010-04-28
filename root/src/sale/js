@@ -1,0 +1,366 @@
+[% IF tmpl == 'form' %]
+$(document).ready(function() {
+
+	$("#available-stock").hide();
+	
+	$("form.new_warehouse").css("margin-top", "600px");
+
+	$("form.new_tax").css("margin-top", "300px");
+
+	var tax_elements = { "cenvat" : "assessable_value", "cvd" : "assessable_value", "sec_edu_cess": "cenvat", "hs_edu_cess" : "cenvat"};
+
+	var input_triggers = new Array( "quantity" , "rate");
+
+	var select_triggers = new Array("cenvat_rate_id", "sales_tax_id");
+
+	var number_elements = new Array( "taxable_value", "sales_tax", "total_invoice_amount");
+
+	$.each(input_triggers, function(n, el) {
+		
+		$(".mainbar input[name=" + el+ "]").change(function(ev) {
+			
+			$(this).format({format:"#.00", locale:"in"});
+			$("span#recalculate").click();
+		});
+	});	
+
+	 $.each(select_triggers, function(n, el) {
+		
+		$(".mainbar select[name=" + el + "]").change(function(ev) {
+			$("span#recalculate").click();
+		});
+		
+	});   
+				
+	$.each(tax_elements, function(el, val) {
+		$(".mainbar input[name=" + el+ "]").blur(function(ev) {
+			$(this).format({format:"#.00", locale:"in"});
+		}).blur();
+	});
+
+	$.each(number_elements, function(n, el) {
+		
+		$(".mainbar input[name=" + el+ "]").blur(function(ev) {
+
+			$(this).format({format:"#.00", locale:"in"});
+
+		}).blur();
+	});
+	$("span#recalculate").click(function(ev) {
+
+		$(".mainbar input[name=assessable_value]").val(
+			$("span#assessable_value").text() 
+			/ $("span#purchase_quantity").text() * $(".mainbar input[name=quantity]").val()
+		).blur();
+
+         var cenvat_data = $(".mainbar select[name=cenvat_rate_id] option:selected").metadata();
+
+         $.each(tax_elements, function(sel, target) {
+
+             $(".mainbar input[name=" + sel + "]")
+             .val(  $(".mainbar input[name=" + target + "]").val() * cenvat_data[sel] / 100 ).blur();
+             });
+
+         var taxable_value = $(".mainbar input[name=rate]").val() * $(".mainbar input[name=quantity]").val();
+
+         $(".mainbar input[name=taxable_value]")
+             .val( taxable_value ).blur();
+
+         var st_data = $(".mainbar select[name=sales_tax_id] option:selected").metadata();
+
+         var sales_tax = taxable_value * st_data['sales_tax'] / 100;
+         var addl_sales_tax = taxable_value * st_data['addl_sales_tax'] / 100;
+
+         $(".mainbar input[name=sales_tax]")
+             .val( sales_tax ).blur();
+
+         $(".mainbar input[name=addl_sales_tax]")
+             .val( addl_sales_tax ).blur();
+
+         $(".mainbar input[name=total_invoice_amount]")
+             .val( taxable_value + sales_tax + addl_sales_tax ).blur();
+
+        return false;
+	});
+    $("#available-stock").find( "a").click(function(ev) {
+        $("#available-stock").hide();
+        // split the href into purchase_id, balance_quantity, uom, 
+        var metadata = $(this).metadata();
+		
+        // add validation rule
+        $("span#balance_quantity").text(metadata['quantity']);
+        $("span#purchase_quantity").text(metadata['p_quantity']);
+        //$("span#supplier_info").data("invoice_no", metadata['invoice_no']);
+       // $("span#supplier_info").data("invoice_date", metadata['invoice_date']);
+        $("span#supplier_info").text("Invoice No. " + metadata['invoice_no'] + " dated " + metadata['invoice_date']);
+		
+		var dateArray = metadata['invoice_date'].split('-');
+        var x = dateArray[0];
+        var y = dateArray[1];
+        y = y-1;
+        var z = dateArray[2];
+		var prevDate = new Date(x, y, z);
+		$(".mainbar input[name=invoice_date]").datepicker('option', 'minDate', prevDate);
+        //console.log(invoice_date);
+        $(".mainbar input[name=quantity]").rules("remove", "max");
+	
+		$(".mainbar input[name=quantity]").rules("add", {"max" :  metadata['quantity'] });
+        
+        $("span#uom").text(metadata['uom']);
+        $("input[name=uom]").val(metadata['uom']);
+
+        $(".mainbar input[name=purchase_id]").val(metadata['purchase_id']);
+        $("span#supplier_type").text(metadata['supplier_type']);
+
+        $("span#assessable_value").text(metadata['assessable_value']);
+
+        
+
+		return false;
+	});
+
+	$(".mainbar select[name=product_id]").change(function(ev) {
+		
+		 /* Minimize the recent invoices tab */
+			if (!$("#toggle-section-menu").hasClass("hidden")) 
+				$("#toggle-section-menu").click();
+		
+			/* hide other forms */
+			$("div.sidebar form").hide();
+
+            
+			/* show your self */
+			$("#available-stock").show().find("li").hide();
+            
+            $("#available-stock li.product_" + $(this).val()).show();
+
+			var prevDate = $(".mainbar input[name=invoice_date]").datepicker("getDate");
+
+			$(".mainbar input[name=invoice_date]").datepicker('option', 'minDate', prevDate);
+
+	}).trigger("change");
+
+	$(".mainbar select[name=invoice_type]").change(function(ev) {
+	    
+        var type = $(this).val();
+        location.href = '[% c.uri_for("/sale/new/0/") %]' + type;
+    });
+
+   	sidebar_forms = {
+
+
+		"company" 	: add_company,
+		"cenvat" 	: add_cenvat,
+		"sales_tax" : add_sales_tax,
+	};
+
+    validation_rules = {
+        quantity : {
+	[% IF  sale.purchase_id %]	
+            max: [% sale.purchase.quantity %],
+	[% END %]
+	    min:0
+        }
+    }
+    init_sidebar_forms();
+
+	//var prevDate = $(".mainbar input[name=invoice_date]").datepicker("getDate");
+	//var prevDate = new Date();
+
+    //$(".mainbar input[name=invoice_date]").datepicker('option', 'minDate', prevDate);
+
+	$(".mainbar input[name=invoice_date]").change(function(ev) {
+			
+		$(".mainbar input[name=removal_date]").datepicker('option', 'minDate',  $(this).datepicker("getDate"));
+		
+		$(".mainbar input[name=challan_date]").datepicker('option', 'minDate',  $(this).datepicker("getDate"));
+		
+
+	}).change();
+
+    var supplier_metadata =  $("span#supplier_info").metadata();
+    
+    if ( supplier_metadata["purchase_id"] == $("input[name=purchase_id]") .val() ){
+			
+	$(".mainbar input[name=quantity]").rules("remove", "max");
+
+     }
+    
+   $("div.mainbar form.wizard").formToWizard({ 
+        submitButton: 'SaveButton' , 
+        element: 'fieldset', 
+        usePanel:true, 
+        buttonPanelNames: ['Save', 'Cancel','Print'],
+        buttonPanelIds:['SaveLink', 'CancelLink', 'PrintLink']
+    });
+
+	$("#CancelLink").click(function(ev) {
+
+		if(confirm("Are you sure you want to cancel this invoice ?") )
+			CancelInvoice();
+	});
+
+	$("a#SaveLink").click(function(ev) {
+
+		$("div.mainbar form").submit();
+	});
+
+	$("a#PrintLink").click(function(ev) {
+
+		PrintInvoice();
+	});
+
+
+
+});
+
+function add_company(metadata) {
+    
+    $(".mainbar select[name=buyer_id]").addOption(metadata['id'], metadata['name']).trigger("change");
+
+    $(".mainbar select[name=consignee_id]").addOption(metadata['id'], metadata['name']).trigger("change");
+}
+
+function add_cenvat(metadata) {
+
+    var metadata_str = '{';
+    var text_str = '';
+    
+    console.log($.dump(metadata));
+    $.each(["cenvat",  "sec_edu_cess", "hs_edu_cess", "cvd"], function(n,val) {
+
+       // { "cenvat" : "8", "edu_Cess" : "4" }
+       metadata_str += '"' + val + '"' + ':' + '"' + metadata[val] + '"' + ",";
+       text_str += metadata[val] + "%, ";
+    });
+
+    metadata_str += '}';
+
+    $(".mainbar select[name=cenvat_rate_id]").addOption(metadata['id'], text_str);
+
+    $(".mainbar select[name=cenvat_rate_id]")
+        .selectOptions(metadata['id'])
+        .find("option:selected")
+        .addClass(metadata_str);
+
+    $(".mainbar select[name=cenvat_rate_id]").trigger("change");
+}
+
+function add_sales_tax (metadata) {
+
+    var metadata_str = '{';
+    var text_str = '';
+
+    $.each(["sales_tax", "addl_sales_tax" ], function(n,val) {
+
+       // { "cenvat" : "8", "edu_cess" : "4" }
+       metadata_str += '"' + val + '"' + ':' + '"' + metadata[val] + '"' + ",";
+       
+    });
+
+    metadata_str += '}';
+
+    text_str += metadata['sales_tax'] + "%";
+    if (metadata['addl_sales_tax']) 
+	text_str += ", " + metadata['addl_sales_tax'] + "%";
+    
+    if (metadata['form_type']) 
+	text_str += " under " + metadata['form_type'] ;
+
+    $(".mainbar select[name=sales_tax_id]").addOption(metadata['id'], text_str);
+
+    $(".mainbar select[name=sales_tax_id]")
+        .selectOptions(metadata['id'])
+        .find("option:selected")
+        .addClass(metadata_str);
+
+
+    $(".mainbar select[name=sales_tax_id]").trigger("change");
+
+}
+
+
+[% END %]
+
+[% IF tmpl == 'list' %]
+
+
+$(document).ready(function() {
+
+	$("div.sidebar table").hide();
+    $("input[name$=date], input.datepicker").datepicker({dateFormat:'yy-mm-dd'});
+	
+	$(".mainbar tbody tr").find("td:first").css("color", "blue")
+	.siblings().find("span.delete").click(function() {
+		
+		if ( $(this).metadata()['id'] && confirm("Sure  you want to delete " + $(this).metadata()['id'] + " ?") ) {
+			
+			$(this).parents("tr:first").hide();
+			
+			$.post("[% c.uri_for("/sale/delete/") %]" + $(this).metadata()['id'] , function(json_data, status) {
+				
+				if (!json_data['error']) 
+					$().message("Delete Successful");
+			});
+		}
+	});
+	var table = $(".mainbar table");
+	var pager = $(table).siblings("div.pager");
+	$(table)
+			.tablesorter()
+			.tablesorterPager({container: pager});
+
+	$(pager).css({position: 'relative', top: '1px'});
+
+	$(".mainbar tbody tr:odd").addClass("odd");
+});
+	
+
+[% END %]
+
+
+/* Common Stuff to form and list */
+function PrintInvoice(id){
+
+	if (!id) {
+  		id = $("div.mainbar form").find("input[name=id]").val();
+	}
+ 	window.location.href = "[% c.uri_for("/sale/publish/") %]" + id;
+	return false;
+
+}
+function DeleteInvoice(id){
+
+	if (!id) {
+  		id = $("div.mainbar form").find("input[name=id]").val();
+	}
+
+	if ( id && confirm("Sure  you want to delete Invoice no " + id + " ?") ) {
+ 			
+ 	$.post("[% c.uri_for("/sale/delete/") %]" + id , function(json_data, status) {
+ 				
+ 		if (!json_data['error']) 
+ 					$().message("Delete Successful");
+ 			});
+ 		}
+ 		
+}
+
+function CancelInvoice(id){
+
+    if (!id) {
+
+        id = $("div.mainbar form").find("input[name=id]").val();
+    }
+    if ( id && confirm("Sure  you want to cancel Invoice no " + id + " ?") ) {
+
+
+	$("div.mainbar form").find("input[name=quantity]").val(0);
+        $("div.mainbar form").find("input[name=is_cancelled]").val(1);
+        $("div.mainbar form").submit();
+    }
+
+}
+
+
+

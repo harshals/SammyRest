@@ -1,0 +1,302 @@
+<style>
+/* form wizards 
+------------------------------------------------*/
+
+
+.prev, .next { background-color:#b0232a; padding:5px 10px; color:#fff; text-decoration:none; margin-top:5px;margin-bottom:5px;}
+
+.prev:hover, .next:hover { background-color:#000; text-decoration:none;}
+
+.prev { float:left;}
+
+.next { float:right;}
+
+#steps { list-style:none; width:100%; overflow:hidden; margin:0px; padding:0px;}
+
+#steps li {font-size:16px; float:left; padding:1px; color:#b0b1b3;}
+
+#steps li span {font-size:11px; display:block; color:#b0b1b3;}
+#steps li span.error {color:red;}
+
+
+#steps li.current { color:#000;}
+
+#steps li.ButtonPanel {
+	padding:0px;
+	font-size:10px;
+	cursor:pointer;
+}
+
+#steps li.ButtonPanel a.Buttons {
+	
+	font-size:10px;
+	float:right;
+}
+
+</style>
+<h2>
+<a href="#" id="toggle-forms">Sales Invoice</a>
+</h2>
+<form action="[% c.uri_for("/sale/put") %]" method="POST" class="wizard">
+	<input type=hidden name="id" value="[% sale.id %]"/>
+    <input type=hidden name="purchase_id" value="[% sale.purchase_id %]" />
+    <input type=hidden name="is_cancelled" value="[% sale.is_cancelled %]" />
+    <fieldset class="login" >
+		<legend>Invoice Details</legend>
+        <div class="grid_5 box" >
+		<p>
+			<label>Invoice Type: </label>
+			<select id="invoice_type" name="invoice_type" [% IF sale.id %]disabled="true"[% END %]>
+                [% PROCESS sale/select
+                    match = sale.invoice_type %]
+            </select>
+		</p>
+        [% IF sale.invoice_type == 1 || sale.invoice_type == 3 || sale.invoice_type == 5 %]
+		<p>
+			<label>Excise Invoice No: </label>
+			<input type="text" name="invoice_no" value="[% sale.invoice_no  %]" readonly />
+		</p>
+        [% END %]
+		<p>
+			<label> Invoice Date: </label>
+			<input type="text" name="invoice_date" value="[% sale.invoice_date %]" class="required"/>
+		</p>
+		<p>
+			<label>Invoice Time: </label>
+			<input type="text" name="invoice_time" value="[% sale.invoice_time %]" class="required"/>
+		</p>
+        [% IF sale.invoice_type == 2 || sale.invoice_type == 3  %]
+		<p>
+			<label>Comm. Tax Invoice No: </label> 
+			<input type="text" name="comm_invoice_no" value="[% sale.comm_invoice_no  %]" readonly />
+		</p>
+        [% END %]
+        [% IF sale.invoice_type == 4 || sale.invoice_type == 5  %]
+        <p>
+			<label>Comm. Retail Invoice No: </label> 
+			<input type="text" name="comm_invoice_no" value="[% sale.comm_invoice_no  %]" readonly />		
+		</p>
+        [% END %]
+		</div><!-- grid_5 -->
+        <div class="grid_5 box" >
+		<p>
+			<label>Challan No: </label>
+			<input type="text" name="challan_no" value="[% sale.challan_no %]" />
+		</p>
+		<p>
+			<label>Challan Date: </label>
+			<input type="text" name="challan_date" value="[% sale.challan_date %]" />
+		</p>
+		<p>
+			<label>Order No: </label>
+			<input type="text" name="order_no" value="[% sale.order_no %]" />
+		</p>
+		<p>
+			<label>Order Date: </label>
+			<input type="text" name="order_date" value="[% sale.order_date %]" />
+		</p>
+        <p>
+			<label>Removal Date: </label>
+			<input type="text" name="removal_date" value="[% sale.removal_date %]"/>
+		</p>
+		
+		<p>
+			<label>Removal Time: </label>
+			<input type="text" name="removal_time" value="[% sale.removal_time %]"/>
+			<span class="help">for eg. 2:45 pm</span>
+		</p>
+
+	</div><!-- grid_5 -->
+	</fieldset>
+
+    <fieldset >
+        <legend>Buyer Details</legend>
+        <div class="grid_5 box"> <!-- grid_5 -->
+        <p>
+            <label>Buyer: </label>
+            <select name="buyer_id" class="required">
+            <option value="">Select Buyer</option>
+                [% PROCESS company/select
+                    match = sale.buyer_id %]
+            </select>
+            
+            <span class="help add_company" > Not found ? Click here to add</span>
+        </p>
+        <p>
+            <label>Consignee: </label>
+            <select name="consignee_id" class="required">
+            <option value="">Select Consignee</option>
+                [% PROCESS company/select
+                    match = sale.consignee_id %]
+                        
+            </select>
+            
+            <span class="help add_company" > Not found ? Click here to add</span>
+        </p>
+        <p>
+            <label>Product Description: </label>
+            <select name="product_id" class="required">
+                <option value="">Please select a Product</option>
+                [% PROCESS product/select
+                    match = sale.product_id %]
+            </select>
+            <a href="[% c.uri_for("/purchase/get/new") %]" class="help"> Not found ? Click here to add</a>
+        </p>
+    </div>
+    <div class="grid_5 box"> <!-- grid_5 -->
+        <p>
+            <label>Units of Measurement: </label>
+            <input type="text" name="uom" value="[% sale.uom %]" class="required" readonly=true/>
+        </p>
+        <p>
+            <label>Balance Quantity :<span id="balance_quantity">[% IF sale.purchase_id %][% sale.purchase.quantity %][% END %]</span> out of <span id="purchase_quantity">[% IF sale.purchase_id %][% sale.purchase.quantity %][% END %]</span> &nbsp;<span id="uom">[% sale.purchase.uom %]</span></label>
+        </p>
+        <p>
+            <label>Supplier Type: <span id="supplier_type">[% sale.purchase.supplier_type %]</span></label>
+        </p>
+        <p>
+            <label>Assessble Value: <span id="assessable_value">[% sale.purchase.assessable_value || 0 %]</span></label>
+        </p>
+
+        <p>
+            <label>Suplier Info: <span id="supplier_info" class='{ "purchase_id" : "[% sale.purchase_id %]"}'>Invoice No [% sale.purchase.invoice_no %], [% sale.purchase.invoice_date %]</span></label>
+        </p>
+        </div> <!-- grid5 -->
+    </fieldset>
+    
+	<fieldset >
+		<legend>Product Information</legend>
+        <div class="grid_5 box" >
+		<p>
+			<label>Rate: </label>
+			<input type="text" name="rate" value="[% sale.rate || 0 %]" class="number required"/>
+		</p>
+		<p>
+			<label>Quantity: </label>
+			<input type="text" name="quantity" value="[% sale.quantity || 0 %]" class="number required"/>
+		</p>
+		<p>
+			<label>Taxable Value: </label>
+			<input type="text" name="taxable_value" value="[% sale.taxable_value %]" readonly="true"/>
+		</p>
+		<p>
+			<label>Sales Tax Type: </label>
+			<select name="sales_tax_id" class="required">
+
+                [% PROCESS modifier/salestax 
+					match = sale.sales_tax_id
+				%]
+			</select>
+			<span class="help add_sales_tax" > Not found ? Click here to add</span>
+		</p>
+		<p>
+			<label>Sales Tax: </label>
+			<input type="text" name="sales_tax" value="[% sale.sales_tax %]" class="number" />
+		</p>
+		<p>
+			<label>Additional Sales Tax: </label>
+			<input type="text" name="addl_sales_tax" value="[% sale.addl_sales_tax %]" class="number" />
+		</p>
+
+        </div><!-- grid_5 -->
+        <div class="grid_5 box" >
+		<p >
+			<label>Assessable Value: </label>
+			<input type="text" name="assessable_value" value="[% sale.assessable_value || 0 %]" class="number" readonly="true"/>
+		</p>
+		<p>
+			<label>Manufacturer Rate of Duty: </label>
+			<select name="cenvat_rate_id" class="required">
+				[% PROCESS modifier/cenvat 
+					match = sale.cenvat_rate_id 
+				%]
+			</select>
+			<span class="help add_cenvat" > Not found ? Click here to add</span>
+		</p>
+		<p >
+			<label>Cenvat : </label>
+			<input type="text" name="cenvat" value="[% sale.cenvat %]" class="number" readonly="true"/>
+		</p>
+
+		<p >
+			<label>Higher Education Cess (2%): </label>
+			<input type="text" name="sec_edu_cess" value="[% sale.sec_edu_cess %]"  class="number" readonly="true"/>
+		</p>
+		<p >
+			<label>SH Education Cess (1%): </label>
+			<input type="text" name="hs_edu_cess" value="[% sale.hs_edu_cess %]"  class="number" readonly="true"/>
+		</p>
+
+		<p >
+			<label>Total Additional Duty (CVD): </label>
+			<input type="text" name="cvd" value="[% sale.cvd %]"  class="number" readonly="true"/>
+		</p>
+
+        </div><!-- grid_5 -->
+
+	</fieldset>
+    <fieldset >
+        <legend>Transport & Summary</legend>
+        <div class="grid_5 box"> <!-- grid_5 -->
+        <p>
+            <label>LR No: </label>
+            <input type="text" name="lr_no" value="[% sale.lr_no %]" >
+        </p>
+        <p>
+            <label>Batch No: </label>
+            <input type="text" name="batch_no" value="[% sale.batch_no %]" />
+        </p>
+        <p>
+            <label>Vehicle No: </label>
+            <input type="text" name="vehicle_no" value="[% sale.vehicle_no %]" />
+        </p>
+        <p>
+            <label>Mode of Transport: </label>
+            <select name="transport_mode">
+                <option value="">Select Mode of Transport</option>
+                <option value="Road">Road</option>
+                <option value="Rail">Rail</option>
+                <option value="Air">Air</option>
+                <option value="Ship">Ship</option>
+            </select>
+        </p>
+        <p>
+            <label>Transporter Name: </label>
+            <input type="text" name="transporter_name" value="[% sale.transporter_name %]" />
+        </p>
+        </div>
+        <div class="grid_5 box"> <!-- grid_5 -->
+        <p>
+            <label>Summary: </label>
+            <textarea name=summary>[% sale.summary %]</textarea>
+        </p>
+	<p>
+		<label>Payment within Days: </lable>
+		<input type="text" name="credit_days" value="[% credit_days %]" />
+	</p>
+	<p>
+		<label>Documents Through: </lable>
+		<input type="text" name="documents_through" value="[% documents_through %]" />
+	</p>	
+        <p>
+			<label>Total Amount: </label>
+			<input type="text" name="total_invoice_amount" value="[% sale.total_invoice_amount %]"/>
+	</p>
+
+
+    </div> <!-- grid_5 -->
+    </fieldset>
+<!--
+		<button class="button" type=submit id="SaveButton">Save</button>
+		<button class="button" type=reset>Cancel</button>
+		<span class="button hide" id=recalculate >Recalcualte</span>
+        [% IF sale.id %]
+		<a class="button" href="[% c.uri_for("/sale/publish/$sale.id") %]" >Export to pdf</a>
+		<button class="button" type=reset>Email</button>
+        [% END %]
+-->
+        <span class="button hide"  style="display:none;" id="recalculate">Recalc</span>
+
+</form>
+
+

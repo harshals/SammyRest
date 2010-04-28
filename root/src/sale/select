@@ -1,0 +1,6 @@
+[% FOREACH invoice_type IN ["Excise Invoice", "Taxable Commercial", "Ecise + Tax Commerical ",  "Retail Commercial" , "Excise + Retail Commercial" ] %]
+    <option value="[% loop.count %]" [% IF loop.count == match %] selected [% END %]>
+        [% invoice_type %]
+</option>
+[% END %]
+

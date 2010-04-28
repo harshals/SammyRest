@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+
+		[% PROCESS head 
+			title = "Einvoices Help" %]
+
+		<script language="javascript">
+
+		[% INCLUDE js %]
+
+		 </script>
+
+	</head>
+	<body>
+		<div class="container_16">
+			
+			<div class="clear"></div>
+			<div class="grid_4 sidebar">
+
+				[% INCLUDE logo %]	
+
+				[% INCLUDE help/sections %]
+
+			</div><!-- grid_4 -->
+			<div class="grid_12 mainbar" >
+
+				[% INCLUDE menu %]
+				<div class="box" id="content"> <!-- begin form box -->
+					
+                    [% UNLESS section %][% section = 'welcome' %][% END %]
+					[% INCLUDE "help/$section" %]
+
+				</div>
+			</div>
+				
+			<div class="clear"></div>
+			<div class="grid_16" id="site_info">
+
+				[% INCLUDE footer %]
+			</div>
+			<div class="clear"></div>
+		</div>
+			</body>
+</html>

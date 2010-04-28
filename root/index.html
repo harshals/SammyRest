@@ -1,0 +1,144 @@
+<html>
+	<head>
+
+	<title>
+		Caselog:		Cases	</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css" media="print,screen" />
+	<link rel="stylesheet" type="text/css" href="/static/css/960.css" media="print,screen" />
+	<link rel="stylesheet" type="text/css" href="/static/css/layout.css" media="print,screen" />
+	<link rel="stylesheet" type="text/css" href="/static/css/nav.css" media="print,screen" />
+	<link rel="stylesheet" type="text/css" href="/static/css/jquery.message.css" media="print,screen" />
+
+	<link rel="stylesheet" type="text/css" href="/static/css/ui-lightness/jquery-ui-1.7.2.custom.css" media="print,screen" />
+		
+	<!--[if IE 6]><link rel="stylesheet" type="text/css" href="/static/css/ie6.css" media="screen" /><![endif]-->
+
+	<!--[if gte IE 7]><link rel="stylesheet" type="text/css" href="/static/css/ie.css" media="screen" /><![endif]-->
+
+
+<script type="text/javascript" src="/static/js/jquery/min/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery/min/jquery-ui-1.8.custom.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery/jquery-fluid16.js"></script>
+
+<script type="text/javascript" src="/static/js/sammy/sammy.js"></script>
+<!-- <script type="text/javascript" src="/static/js/sammy/min/sammy-0.5.3.min.js"></script> -->
+
+<script type="text/javascript" src="/static/js/joose/Task/Joose/Core.js"></script>
+<!-- <script src="/static/js/js-model-0.8.3.js" type="text/javascript" charset="utf-8"></script> -->
+
+<script type="text/javascript" src="/static/js/Jemplate.js"></script>
+<script type="text/javascript" src="/static/js/jemplates.js"></script>
+
+
+
+<script type="text/javascript" src="/static/js/jquery/plugins/jquery.form.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.validate.pack.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.selectboxes.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.message.pack.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.validate.pack.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.numberformatter.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.metadata.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.fieldtag.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.jqprint.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.rest.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.tablesorter.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.tablesorter.pager.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.tablesorter.filter.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.form2wizard.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.template.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.cache.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.json.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.nested_params.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.storage.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.form.js"></script>
+
+    <script language="javascript">
+	var jemplate = function(app) {
+		  
+			this.helpers({
+			process: function(path, data) {
+			  
+				Jemplate.process(path, data || this ,app.element_selector);
+			}
+		  });  
+	};
+	(function($){
+		$(function() {
+				main.run('#/');
+				menu.run('#/home');
+			});
+	})(jQuery);
+
+
+	    </script>
+    <script src="/static/js/controllers/main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/controllers/menu.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/controllers/artist.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/controllers/login.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/controllers/error.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/js/models/artist.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+	<body>
+		<div class="container_16">
+			
+			<div class="clear"></div>
+			<!-- sidebar form container -->
+			<div class="grid_4 " id="sidebar">
+
+				[% INCLUDE logo %]
+
+				<div class="block"> 
+
+				<!--	 -->
+
+				</div>	
+
+
+			</div><!-- grid_4 -->
+			<div class="grid_12 " id="#main" >
+			<div class="block" id="menu" > <!-- menu block -->
+				<ul class="nav main">
+
+				    <li>
+
+					<a href="">Matters</a>
+
+					<ul>
+					    <li>
+						<a href="#/artist/new">Add New Artist</a>
+					    </li>
+					</ul>
+				    </li>
+				    <li>
+
+					<a href="#/">Listings</a>
+
+					<ul>
+					    <li>
+						<a href="http://localhost:3000/matter/search">List Matters</a>
+					    </li>
+
+					</ul>
+					<ul>
+
+					    <li> <a href="#/artist">List Artists</a> </li>
+
+					</ul>
+
+				    </li>
+
+				    <li class="secondary">
+					<a href="http://localhost:3000/#/" title="Clean me up">Clean me up</a>
+
+					<a href="#/logout" title="Click here to logout from Einvoices.biz">Logout</a>
+					<a href="javascript:printHTML();" title="Print">Print</a>
+
+				    </li>
+					
+
+				</ul>
+
+			</div><!-- meu  -->
+
+				 <div class="box" id="content" > <!-- begin form box -->
+				    
+
+				  </div>
+			  </div>
+				
+			<div class="clear"></div>
+
+			<div class="grid_16" id="site_info">
+
+				[% INCLUDE footer %]
+			</div>
+			<div class="clear"></div>
+		</div>
+	</body>
+</html>
+       
+
+<!-- 0.1624s -->
+

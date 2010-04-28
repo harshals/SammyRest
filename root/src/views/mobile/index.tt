@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+
+		[% PROCESS head 
+			title = "Welcome Back" %]
+
+		<script type="text/javascript">
+            
+            [% INCLUDE js %]
+
+		(function($) {
+		 	var app =  $.sammy(function() {
+
+				 this.element_selector = '#content';
+				 this.debug = true;
+
+				 this.get('#/', function(c) {
+					
+					$("#menu").show();
+					 app.swap(" Select action from above menu");
+				});
+				this.get('#/contact', function(c) { 
+
+					$("#menu").hide();
+					 c.partial("[% c.uri_for("/contact/search") %]" );
+				});
+				this.get('#/contact/view/:id', function(c) { 
+
+					$("#menu").hide();
+					 c.partial("[% c.uri_for("/contact/get/") %]" + c.params["id"]);
+				});
+				this.post('#/contact/delete', function(c) { 
+					
+					$("#menu").hide();
+					 //c.partial("[% c.uri_for("/contact/delete/") %]" + c.params["id"], function(html) {
+					 	app.swap("Delete Successful for " + c.params["id"]);
+					 //});
+					 return false;
+				});
+			});
+
+		$(function() {
+				app.run('#/');
+		});
+		})(jQuery);
+
+    	</script>
+
+	</head>
+	<body>
+		<div class="container_4">
+			
+			<div class="clear"></div>
+			<!-- sidebar container -->
+			<div class="grid_4 " id="sidebar">
+
+				[% PROCESS logo 
+					skip_welcome_message = 1
+				%]	
+
+				[% PROCESS menu 
+					menu_format = "vertical"
+				%]
+                <div class="block" id="content"> 
+                 
+
+                </div>	
+
+			</div><!-- grid_4 -->
+			<!-- sidebar container -->
+			
+			<div class="clear"></div>
+			<div class="grid_4" id="site_info">
+
+				[% INCLUDE footer %]
+			</div>
+			<div class="clear"></div>
+		</div>
+	</body>
+</html>

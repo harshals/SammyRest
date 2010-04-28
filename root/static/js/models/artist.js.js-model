@@ -1,0 +1,83 @@
+var Artist = Model("m_artist", 
+	// Class methods
+	{
+		persistence: Model.RestPersistence( main.baseUrl + "/artist"),
+		
+		all : function() {
+				
+				
+				var x = function(m) {
+				
+					jQuery.ajax({
+						type: 'GET',
+					 	url: m.persistence.resource,
+					 	dataType: "json",
+					 	data: {},
+                        async:false,
+					 	complete: function(xhr, textStatus) {
+						 
+					 		var data = m.persistence.parseResponseData(xhr);
+							m.collection = data.list;
+						 }
+					}); 
+				}(this);
+
+                return this.collection;
+					
+		},
+
+        find : function(id) {
+        
+            var x = function(m) {
+				
+					jQuery.ajax({
+						type: 'GET',
+					 	url: m.persistence.resource + "/" + id,
+					 	dataType: "json",
+					 	data: {},
+                        async:false,
+					 	complete: function(xhr, textStatus) {
+						    
+					 		var data = m.persistence.parseResponseData(xhr);
+                            m.collection.push(data.data);
+						 }
+					}); 
+				}(this);
+
+                return new Artist(this.collection.pop());
+				
+        },
+		save : function() {
+
+			var x = function(m) {
+				
+					jQuery.ajax({
+						type: 'PUT',
+					 	url: m.persistence.resource ,
+					 	dataType: "json",
+					 	data: m.attributes,
+                        async:false,
+					 	complete: function(xhr, textStatus) {
+						    
+					 		var data = m.persistence.parseResponseData(xhr);
+							m.collection.push(data.data);
+						 }
+					}); 
+				}(this);
+
+                return new Artist(this.collection.pop());
+		}
+		
+	}, 
+	// Instance methods	
+	{
+
+		,
+		validate: function() {
+	    	if (this.attr('name') == null || this.attr('name') == '') {
+	      		this.errors.add("name", "cannot be empty")
+	    	}
+		},
+	}
+);
+

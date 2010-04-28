@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+
+		[% PROCESS head 
+			title = "Welcome to Invoices" %]
+
+		<script language="javascript">
+
+		 </script>
+
+	</head>
+	<body>
+		<div class="container_16">
+			
+			<div class="clear"></div>
+			<!-- sidebar form container -->
+			<div class="grid_4 sidebar">
+
+				[% INCLUDE logo %]	
+			<h3>In firefox we belive</h3>
+
+			<div class="block" style="height:258px;background:url(/static/images/firefox_logo.png);background-repeat:no-repeat;"> </div>
+           	<!-- sidebar form container-->
+
+
+			</div><!-- grid_4 -->
+			<div class="grid_12 mainbar" >
+
+				[% INCLUDE menu %]
+				<div class="box" > <!-- begin form box -->
+					<div class="box" id="list-items">
+		
+						<a href=/admin/reset/1> Click here to confirm you want to reset your database</a>
+
+					</div>				
+
+				</div>
+
+			</div>
+				
+			<div class="clear"></div>
+			<div class="grid_16" id="site_info">
+
+				[% INCLUDE footer %]
+			</div>
+			<div class="clear"></div>
+		</div>
+	</body>
+</html>

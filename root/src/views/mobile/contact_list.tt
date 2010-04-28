@@ -1,0 +1,11 @@
+<ul>
+
+[% FOREACH row IN contact_rs.all %]
+    <li>
+ 	<a href="#/contact/view/[% row.id %]"> [% row.name || row.id %] </a><BR>
+    <h5><i>[% row.tel1 %]</i></h5>
+    </li>
+[% END %]
+
+</ul>
+

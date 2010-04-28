@@ -1,0 +1,60 @@
+
+[% BLOCK "artist/form/hidden" %]
+
+	<input type=hidden name="id" value="[% artist.id %]"/>
+	<input type=hidden name="is_company" value="[% artist.is_company %]"/>
+	<input type=hidden name="company_id" value="[% artist.company_id %]"/>
+[% END %]
+
+[% BLOCK "artist/form/b1" %]
+	<p>
+        <label>Name: </label>
+        <input type="text" name="name" value="[% artist.name %]" class="required"/>
+    </p>
+    <p>
+        <label>Summary: </label>
+        <input type="text" name="summary" value="[% artist.summary%]" class="required"/>
+    </p>
+
+[% END %]
+
+[% BLOCK "artist/form/b2" %]
+    <p>
+        <label>Telephone 1: </label>
+        <input type="text" name="tel1" value="[% artist.tel1 %]" class="required"/>
+    </p>
+
+    <p>
+        <label>Telephone 2: </label>
+        <input type="text" name="tel2" value="[% artist.tel2 %]" class="required"/>
+    </p>
+    <p>
+        <label>Mobile : </label>
+        <input type="text" name="mobile" value="[% artist.mobile %]" class="required"/>
+    </p>
+
+    <p>
+        <label>Email : </label>
+        <input type="text" name="email" value="[% artist.email %]" class="required"/>
+    </p>
+    <p>
+        <label>Website: </label>
+        <input type="text" name="website" value="[% artist.website %]" class="required"/>
+    </p>
+[% END %]
+
+[% BLOCK "artist/form/b3" %]
+
+    <p class="fieldtag">
+        <label>Office Address : </label>
+        <input type="text" name="address_1" value="[% artist.address_1 %]" title="Addres Line 1"/>
+        <input type="text" name="address_2" value="[% artist.address_2 %]" title="Addres Line 2"/>
+        <input type="text" name="city" value="[% artist.city %]" title="City1"/>
+        <input type="text" name="state" value="[% artist.state %]" title="State"/>
+        <input type="text" name="zip" value="[% artist.zip %]" title="zip"/>
+        <input type="text" name="country" value="India" title="country"/>
+	</p>
+
+
+[% END %]
+

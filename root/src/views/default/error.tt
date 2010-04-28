@@ -1,0 +1,17 @@
+<div class="clear"></div>
+
+<div class="box" id="list-items">
+
+    <p>You may report these errors to support@einvoices.biz</p>
+    <ul class="menu" id="section-menu">
+        [% FOREACH er IN errors %]
+        <li class=email title="Email to support team"><b>Error:</b> [% er %] <BR/>
+            <b>Message : </b>[% message %] <BR/>
+            <b>URL :</b> [% c.req.path %] <BR/>
+            <b>Body Params:</b> [% FOREACH p IN c.req.params %] [% p.key _ ":" _ p.val %] [% END %]
+        </li>
+        [% END %]
+    </ul>
+</div>				
+
+

@@ -1,0 +1,12 @@
+	
+<h2> Edit  Artist No. [% artist.artistid %] ( [% message %] )</h2>
+<form action="#/artist" method="POST" >
+    <input type=hidden name=artistid value="[% artist.artistid %]">
+    <div class="grid_5">
+	<fieldset class="login">
+		<legend>Snapshot</legend>
+        <input name="name" value="[% artist.name %]">      
+    </fieldset>
+    </div>
+    <input type=submit value="Hit me"/>
+</form>

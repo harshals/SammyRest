@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+
+		[% PROCESS head 
+			title = "Welcome to Invoices" 
+            skip_js = 1 %]
+
+		<script language="javascript">
+            
+            [%# INCLUDE js %]
+
+		 </script>
+
+	</head>
+	<body>
+		<div class="container_16">
+			
+			<div class="clear"></div>
+			<!-- sidebar form container -->
+			<div class="grid_4 " id="sidebar">
+
+				[% INCLUDE logo %]	
+			<div class="block"> 
+                Mobile browser view
+			</div>	
+
+			<h3>In firefox we belive</h3>
+
+			<div class="block" style="height:258px;background:url([% c.uri_for("/static/images/firefox_logo.png") %]);background-repeat:no-repeat;"> </div>
+           	<!-- sidebar form container-->
+
+
+			</div><!-- grid_4 -->
+			<div class="grid_12 " id="#main" >
+                [% IF c.user_exists %]
+                    <div class="box" > <!-- begin form box -->
+                    
+                        main content
+
+                    </div>
+                  [% ELSE %]
+                    <div class="box" > <!-- begin form box -->
+                    [% INCLUDE "$template_prefix/login.tt" %]
+                    
+					</div>
+                [% END %]
+            </div>
+				
+			<div class="clear"></div>
+			<div class="grid_16" id="site_info">
+
+				[% INCLUDE footer %]
+			</div>
+			<div class="clear"></div>
+		</div>
+			</body>
+</html>
