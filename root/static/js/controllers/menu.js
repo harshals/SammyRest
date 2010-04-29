@@ -2,7 +2,7 @@ var menu = $.sammy('#menu', function() {
 
 
 	 this.element_selector = '#menu';
-	 this.use(jemplate);
+	 this.use(utils);
 	 this.debug = true;
 
 	 this.get('#/artists', function(context) {

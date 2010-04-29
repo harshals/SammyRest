@@ -1,11 +1,12 @@
   
 $.sammy("#content", function() {
 
- 	this.get('#/errors', function(context) {
+ 	this.get(/\#\/errors\/(\w+)$/, function(context) {
 	
-		context.log("coming here");
-		//this.errors = this.articles.errors.all();
-		this.partial('views/main/error.jshtml');
+		var model = this.split(0);
+
+        var template = main.view + "errors.tt";
+		this.process(template, main.models[model].list_errors() );
     });
 });
   

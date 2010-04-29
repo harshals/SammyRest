@@ -34,15 +34,7 @@
 <script type="text/javascript" src="/static/js/jquery/plugins/jquery.form.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.validate.pack.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.selectboxes.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.message.pack.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.validate.pack.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.numberformatter.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.metadata.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.fieldtag.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.jqprint.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.rest.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.tablesorter.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.tablesorter.pager.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.tablesorter.filter.js"></script><script type="text/javascript" src="/static/js/jquery/plugins/jquery.form2wizard.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.template.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.cache.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.json.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.nested_params.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.storage.js"></script><script type="text/javascript" src="/static/js/sammy/plugins/sammy.form.js"></script>
 
     <script language="javascript">
-	var jemplate = function(app) {
-		  
-			this.helpers({
-			process: function(path, data) {
-			  
-				Jemplate.process(path, data || this ,app.element_selector);
-			}
-		  });  
-	};
+	
 	(function($){
 		$(function() {
 				main.run('#/');
@@ -52,6 +44,7 @@
 
 
 	    </script>
+    <script src="/static/js/controllers/plugins.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/controllers/main.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/controllers/menu.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/controllers/artist.js" type="text/javascript" charset="utf-8"></script>
@@ -97,9 +90,7 @@
 					<a href="#/">Listings</a>
 
 					<ul>
-					    <li>
-						<a href="http://localhost:3000/matter/search">List Matters</a>
-					    </li>
+					    <li> <a href="http://localhost:3000/matter/search">List Matters</a> </li>
 
 					</ul>
 					<ul>

@@ -18,6 +18,7 @@
             <th >
             <a href="#[% "/artist/delete/$row.artistid" %]">Del</a>
             <a href="#[% "/artist/edit/$row.artistid" %]">Edit</a>
+            <a href="#[% "/artist/delete/99" %]">Del</a>
             </th>
         </tr>
         [% END %]

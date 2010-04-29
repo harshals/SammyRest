@@ -1734,7 +1734,7 @@ Jemplate.templateMap['views/default/artist_list.tt'] = function(context) {
 
     try {
 output += '<table >\n    <thead>\n        <tr>\n            <th colspan="7" class="table-head">List of Artists</th>\n        </tr>\n\n        <tr>\n            <th>Id</th>\n            <th>Name</th>\n            <th>Action</th>\n        </tr>\n    </thead>\n    <tbody>\n        ';
-//line 23 "views/default/artist_list.tt"
+//line 24 "views/default/artist_list.tt"
 
 // FOREACH 
 (function() {
@@ -1761,7 +1761,10 @@ output += '/artist/delete/' + stash.get(['row', 0, 'artistid', 0]);
 output += '">Del</a>\n            <a href="#';
 //line 1 "views/default/artist_list.tt"
 output += '/artist/edit/' + stash.get(['row', 0, 'artistid', 0]);
-output += '">Edit</a>\n            </th>\n        </tr>\n        ';;
+output += '">Edit</a>\n            <a href="#';
+//line 21 "views/default/artist_list.tt"
+output += '/artist/delete/99';
+output += '">Del</a>\n            </th>\n        </tr>\n        ';;
             retval = list.get_next();
             value = retval[0];
             done = retval[1];
@@ -1805,47 +1808,11 @@ output += '<div class="clear"></div>\n\n<div class="box" id="list-items">\n\n   
     try {
         while (! done) {
             stash.data['er'] = value;
-output += '\n        <li class=email title="Email to support team"><b>Error:</b> ';
-//line 8 "views/default/error.tt"
-output += stash.get('er');
-output += ' <BR/>\n            <b>Message : </b>';
+output += '\n        <li class=email title="Email to support team"><b>Error:</b>  <BR/>\n            <b>Message : </b>';
 //line 9 "views/default/error.tt"
-output += stash.get('message');
+output += stash.get(['er', 0, 'message', 0]);
 output += ' <BR/>\n            <b>URL :</b> ';
-//line 10 "views/default/error.tt"
-output += stash.get(['c', 0, 'req', 0, 'path', 0]);
-output += ' <BR/>\n            <b>Body Params:</b> ';
-//line 11 "views/default/error.tt"
-
-// FOREACH 
-(function() {
-    var list = stash.get(['c', 0, 'req', 0, 'params', 0]);
-    list = new Jemplate.Iterator(list);
-    var retval = list.get_first();
-    var value = retval[0];
-    var done = retval[1];
-    var oldloop;
-    try { oldloop = stash.get('loop') } finally {}
-    stash.set('loop', list);
-    try {
-        while (! done) {
-            stash.data['p'] = value;
-output += ' ';
-//line 11 "views/default/error.tt"
-output += stash.get(['p', 0, 'key', 0])  + ':'  + stash.get(['p', 0, 'val', 0]);
-output += ' ';;
-            retval = list.get_next();
-            value = retval[0];
-            done = retval[1];
-        }
-    }
-    catch(e) {
-        throw(context.set_error(e, output));
-    }
-    stash.set('loop', oldloop);
-})();
-
-output += '\n        </li>\n        ';;
+output += ' <BR/>\n            <b>Body Params:</b> \n        </li>\n        ';;
             retval = list.get_next();
             value = retval[0];
             done = retval[1];

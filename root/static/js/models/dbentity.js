@@ -4,12 +4,27 @@ Class('DbEntity', {
  
 		
 		has : { 
+			// primary key eg. _id
 			pk : {is : 'ro', init : 'id' },
+
+			// value of primary key of the current object (if any)
+			id : {is : 'rw' , init : '' },
+
 			list : { is : 'rw' , isa : Joose.I.Array , init: function() { return []} },
+
+			// REST url
 			url : { is : 'ro' , init : ''},
+
+			// any message received from server
 			message : {is : 'rw' , init : ''},
+
+			// data revceived or give to server
 			data : { is : 'rw' , init: function() { return {} }},
+
+			// status of the last request
 			ajaxStatus : {is : 'rw', init: true},
+
+			// validation and other erros
 			errors :{ is : 'rw' , isa : Joose.I.Array  , init : function() { return [] }} 
 		},
 
@@ -31,7 +46,14 @@ Class('DbEntity', {
 						model.data = json.data;
 						model.list = json.list;
 						model.ajaxStatus = json.success;
-					} 
+					} ,
+					error : function(xhr,textStatus, errorThrown) {
+						
+						var json = $.parseJSON(xhr.getResponseText());
+
+						model.ajaxStatus = false;
+						model.message = json.message;
+					}
 				});
 
 				}(this);
@@ -47,36 +69,46 @@ Class('DbEntity', {
         		
 				this.xhr('GET', this.url + "/" + id);
 				
-				return this.data;
+				return this.ajaxStatus;
+			},
+			search : function() {
+
+				this.xhr('POST', this.url );
 			},
 			update : function(id) {
 
-				if (this.validate())
+				if (!this.validate())
+					return false;
+
 				this.xhr('POST', this.url + "/" + id);
 
-				return this.data;
+				return this.ajaxStatus;
 			},
 			create : function() {
 				
-				if (this.validate())
+				if (!this.validate())
+					return false;
+
 				this.xhr('PUT', this.url );
 
-				return this.data;
+				return this.ajaxStatus;
 			},
-			save : function() {
+			save : function(data) {
 				
-				this.isNew() ? this.update(this.data[ this.pk ]) : this.create();
+				this.data = data;
+				
+				return (this.isNew() ) ? this.update(this.data[ this.pk ]) : this.create();
 
-				return this.data;
 			},
 			remove : function(id) {
 
 				this.xhr('DELETE', this.url + "/" + id);
 
-				return this.message;
+				return this.ajaxStatus;
 			},
 			isNew : function() {
-				return defined (this.data[ this.pk ]);
+				
+				return (typeof (this.data[ this.pk ]) == 'undefined' || this.data[ this.pk] == '') ? false : true;
 			},
             templateVars : function(type) {
                 
@@ -88,7 +120,14 @@ Class('DbEntity', {
                 tvars[name] = (type == 'list') ?  { 'list' : this.list } :  this.data ;
 
                 return tvars;
-            }
+            },
+			list_errors : function() {
+				
+				if (!this.ajaxStatus)
+					this.errors.push({message: this.message});
+
+				return this.errors;
+			}
 		}
 
 });
