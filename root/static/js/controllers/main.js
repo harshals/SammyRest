@@ -5,6 +5,7 @@
 	 this.element_selector = '#content';
 	 this.use(utils);
 	 this.debug = true;
+	 this.raise_errors = true;
 	 this.loggedIn = true ;
 	 /*var regex = location.href.match(/\/a\/([a-zA-Z]*)\/?/);
 
@@ -19,12 +20,13 @@
      this.view = "views/default/";
      this.tvars = {};
 
-	 this.get("#/", function(c){
+
+	
+	this.get("#/", function(c){
 
 		if(!main.loggedIn){
 			this.redirect("#/login");
 		}else {
-
 			this.redirect('#/home');
 		}
 
@@ -75,12 +77,16 @@
         var id = this.splat(1);
 
         main.models[model].remove(id);
-
+/*
         if (!main.models[model].ajaxStatus) {
 
 			this.redirect("#/errors/" + model);
-        }
-		this.redirect("#/" + model);
+			this.errors();
+        }else {
+
+			this.redirect("#/" + model);
+		}
+*/
 	});
 
 	// new item
@@ -94,7 +100,7 @@
 	});
 	
 	// update or create single item
-	this.post(/\#\/(artist|cd)$/, function(c) {
+	this.post(/\#\/(artist|cd)\/save/, function(c) {
 		
 		delete c.params.$form;
 
@@ -131,6 +137,7 @@
 		main.runRoute("get", "#/" + model);
     });
 
+		
 
 });
 

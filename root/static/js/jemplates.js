@@ -1711,7 +1711,7 @@ output += stash.get(['artist', 0, 'artistid', 0]);
 output += ' ( ';
 //line 2 "views/default/artist_edit.tt"
 output += stash.get('message');
-output += ' )</h2>\n<form action="#/artist" method="POST" >\n    <input type=hidden name=artistid value="';
+output += ' )</h2>\n<form action="#/artist/save" method="POST" >\n    <input type=hidden name=artistid value="';
 //line 4 "views/default/artist_edit.tt"
 output += stash.get(['artist', 0, 'artistid', 0]);
 output += '">\n    <div class="grid_5">\n	<fieldset class="login">\n		<legend>Snapshot</legend>\n        <input name="name" value="';
@@ -1810,7 +1810,7 @@ output += '<div class="clear"></div>\n\n<div class="box" id="list-items">\n\n   
             stash.data['er'] = value;
 output += '\n        <li class=email title="Email to support team"><b>Error:</b>  <BR/>\n            <b>Message : </b>';
 //line 9 "views/default/error.tt"
-output += stash.get(['er', 0, 'message', 0]);
+output += stash.get('er');
 output += ' <BR/>\n            <b>URL :</b> ';
 output += ' <BR/>\n            <b>Body Params:</b> \n        </li>\n        ';;
             retval = list.get_next();

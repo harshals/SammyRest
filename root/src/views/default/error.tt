@@ -4,9 +4,9 @@
 
     <p>You may report these errors to support@einvoices.biz</p>
     <ul class="menu" id="section-menu">
-        [% FOREACH er IN errors %]
+        [% FOREACH er = errors %]
         <li class=email title="Email to support team"><b>Error:</b>  <BR/>
-            <b>Message : </b>[% er.message %] <BR/>
+            <b>Message : </b>[% er %] <BR/>
             <b>URL :</b> [%  %] <BR/>
             <b>Body Params:</b> 
         </li>

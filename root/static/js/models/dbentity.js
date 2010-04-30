@@ -49,10 +49,9 @@ Class('DbEntity', {
                         }, 
                         error : function(req, textStatus, errorThrown) {
                             
-                            console.log(req.responseText);
+							model.ajaxStatus = false;
                             var js = $.parseJSON(req.responseText);
                             model.setErrors(js.messages);
-                            console.log(model.errors);
                         }
                         
                     });
@@ -124,10 +123,8 @@ Class('DbEntity', {
             },
 			list_errors : function() {
 				
-				if (!this.ajaxStatus)
-					this.errors.push({message: this.message});
-
 				return this.errors;
+
 			}
 		}
 
