@@ -34,27 +34,28 @@ Class('DbEntity', {
 				
 				var x = function(model) {
 
-				$.ajax( {
-					type : type,
-					url : url,
-					data : model.data,
-					dataType : 'json',
-					async : false,
-					success : function(json) {
-						
-						model.message = json.message;
-						model.data = json.data;
-						model.list = json.list;
-						model.ajaxStatus = json.success;
-					} ,
-					error : function(xhr,textStatus, errorThrown) {
-						
-						var json = $.parseJSON(xhr.getResponseText());
-
-						model.ajaxStatus = false;
-						model.message = json.message;
-					}
-				});
+                    $.ajax( {
+                        type : type,
+                        url : url,
+                        data : model.data,
+                        dataType : 'json',
+                        async : false,
+                        success : function(json) {
+                            
+                            model.errors.push(json.messages);
+                            model.data = json.data;
+                            model.list = json.list;
+                            model.ajaxStatus = json.success;
+                        }, 
+                        error : function(req, textStatus, errorThrown) {
+                            
+                            console.log(req.responseText);
+                            var js = $.parseJSON(req.responseText);
+                            model.setErrors(js.messages);
+                            console.log(model.errors);
+                        }
+                        
+                    });
 
 				}(this);
 			},

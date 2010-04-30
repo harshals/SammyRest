@@ -69,7 +69,7 @@
 
 	// delete single item
 	
-	this.get(/\#\/(artist|cd)\/delete\/(.*)/, function(c){
+	this.get(/\#\/(artist|cd)\/delete\/(\d+)$/, function(c){
         
         var model = this.splat(0);
         var id = this.splat(1);
