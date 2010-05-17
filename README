@@ -1,6 +1,31 @@
 Demo application Using Catalyst + Sammy + Jemplate + Joose 
 
+Application DB is described in  schema.sql
+
+You can use the test server by installing - 
+
+Task::Catalyst (http://search.cpan.org/~flora/Task-Catalyst-4.00/)
+Catalyst::Controller::DBIC::API (http://search.cpan.org/~flora/Catalyst-Controller-DBIC-API-2.002001/)
+
 Run script/resttest_server.pl to test the application.
 
+or 
 
+have an independent REST server serving on
 
+1. Create 				: PUT /api/rest/<tablename> 
+2. Update 				: POST /api/rest/<tablename>/<id>
+3. Get Single Record 	: GET /api/rest/<tablename>/<id>
+4. Get Multiple Records : GET /api/rest/<tablename>
+5. Delete 				: DELETE /api/rest/<tablename>/<id>
+ 
+Each request returns a JSON object which may have following keys 
+
+{ success : true|false
+  list : Array of db records / json objects in case returning list
+  data : Single DB record in case returning single object 
+  message : Error message in case of error
+}
+
+<tablename> can be artist, cd,track.
+<id> is primary key

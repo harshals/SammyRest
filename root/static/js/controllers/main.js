@@ -17,6 +17,7 @@
 	 this.firm = "caselog";
 	 this.baseUrl = "/api/rest/";
 	 this.models = {};
+	 this.model = "";
      this.view = "views/default/";
      this.tvars = {};
 
@@ -98,20 +99,36 @@
 
 		this.process(template , {});
 	});
-	
+
+	this.before({ only: {verb: 'post'}}, function(e ) {
+			
+			e.log("coming here 1st");
+			return true;
+	});
+
+
+	this.bind("check-form-submission", function(e, data) {
+		
+		$(data.form).validate();
+		if (!$(data.form).valid()) {
+
+			this.log("form is invald " + main.model );
+			//this.redirect("#/errors/" + main.model);
+		}
+	});
+
 	// update or create single item
 	this.post(/\#\/(artist|cd)\/save/, function(c) {
-		
-		delete c.params.$form;
 
-        var model = this.splat(0);
+        main.model = this.splat(0);
         
-	    if (!main.models[model].save(c.params.toHash())) {
+		c.log("coming here after");
+	    if (!main.models[main.model].save(c.params.toHash())) {
 
-			this.redirect("#/errors/" + model);
+			this.redirect("#/errors/" + main.model);
 		}
 
-		main.runRoute("get", "#/" + model);
+		main.runRoute("get", "#/" + main.model);
 	});
 
 	// display search form

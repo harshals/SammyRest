@@ -5,7 +5,7 @@
     <div class="grid_5">
 	<fieldset class="login">
 		<legend>Snapshot</legend>
-        <input name="name" value="[% artist.name %]">      
+        <input name="name" value="[% artist.name %]" class="email required">      
     </fieldset>
     </div>
     <input type=submit value="Hit me"/>

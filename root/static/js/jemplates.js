@@ -1714,7 +1714,7 @@ output += stash.get('message');
 output += ' )</h2>\n<form action="#/artist/save" method="POST" >\n    <input type=hidden name=artistid value="';
 //line 4 "views/default/artist_edit.tt"
 output += stash.get(['artist', 0, 'artistid', 0]);
-output += '">\n    <div class="grid_5">\n	<fieldset class="login">\n		<legend>Snapshot</legend>\n        <input name="name" value="';
+output += '">\n    <div class="grid_5">\n	<fieldset class="login">\n		<legend>Snapshot</legend>\n        <input class="email required" name="name" value="';
 //line 8 "views/default/artist_edit.tt"
 output += stash.get(['artist', 0, 'name', 0]);
 output += '">      \n    </fieldset>\n    </div>\n    <input type=submit value="Hit me"/>\n</form>\n';
