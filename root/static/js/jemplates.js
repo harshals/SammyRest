@@ -1760,7 +1760,7 @@ output += '</td>\n            <th >\n            <a href="#';
 output += '/artist/delete/' + stash.get(['row', 0, 'artistid', 0]);
 output += '">Del</a>\n            <a href="#';
 //line 1 "views/default/artist_list.tt"
-output += '/artist/edit/' + stash.get(['row', 0, 'artistid', 0]);
+output += '/edit/artist/' + stash.get(['row', 0, 'artistid', 0]);
 output += '">Edit</a>\n            <a href="#';
 //line 21 "views/default/artist_list.tt"
 output += '/artist/delete/99';

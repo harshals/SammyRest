@@ -34,9 +34,6 @@
 	});
 	this.get("#/home", function(c){
 		
-        // initialize all the models here
-		main.models["artist"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "artist" });
-		main.models["cd"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "cd" });
 
         //initialize their templates
 
@@ -45,21 +42,18 @@
 
 	this.before(function(c) {
 		
-		c.log("disecting " + c.path);
-
-		args = c.path.split('/');
-		args.shift();
-		main.model = args.shift();
-		main.action = args.shift();
-		main.args = args;
+        // initialize all the models here
+		main.models["artist"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "artist" });
+		main.models["cd"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "cd" });
+        
 	});
 
 
 	// index , generate list of all artist
 
-	this.get(/\#\/(artist|cd)$/, function(c) {
+	this.get("#/list/:model", function(c) {
 		
-        var model = this.splat(0);
+        var model = c.params['model'];
 
         var template = main.view + model + "_list.tt";
 
@@ -70,10 +64,10 @@
 
 	// get single item
 	
-	this.get(/\#\/(artist|cd)\/edit\/(\d+)$/, function(c){
+	this.get("#/edit/:model/:id", function(c){
         
-        var model = main.model;
-        var id = main.args[0];
+        var model = c.params['model'];
+        var id = c.params['id'];
 
         main.models[model].find(id);
         
@@ -84,33 +78,32 @@
 
 	// delete single item
 	
-	this.get(/\#\/(artist|cd)\/delete\/(\d+)$/, function(c){
+	this.get("#/delete/:model/:id", function(c){
         
-        var model = main.model;
-        var id = main.args[0];
+        var model = c.params['model'];
+        var id = c.params['id'];
 
         main.models[model].remove(id);
 
         if (!main.models[model].ajaxStatus) {
 
-			this.redirect("#/" + model + "/errors");
+			this.redirect("#/errors/" + model );
         }else {
 
-			this.redirect("#/" + model);
+			this.redirect("#/list/" + model);
 		}
 
 	});
 
 	// new item
-	this.get(/\#\/(artist|cd)\/new/, function(c){
+	this.get("#/new/:model/:id", function(c){
 		
-        var model = main.model;
+        var model = c.params['model'];
 
         var template = main.view + model + "_edit.tt";
 
 		this.process(template , {});
 	});
-
 	
 	this.before({ only: {verb: 'post'}}, function(c ) {
 			
@@ -121,39 +114,36 @@
 
 			return false;
 		}
-
 		return true;
 	});
 	
 	// update or create single item
-	this.post(/\#\/(artist|cd)\/save/, function(c) {
+	this.post("#/save/:model", function(c) {
 
-        var model = main.model 
+        var model = c.params['model'];
         
 	    if (!main.models[model].save(c.params.toHash())) {
 
 			this.redirect("#/errors/" + model);
 		}
 		
-		c.redirect("#/" + model);
-
-		//main.runRoute("get", "#/" + main.model);
+		c.redirect("#/list/" + model);
 		return false;
 	});
 
 	// display search form
-	this.get(/\#\/(artist|cd)\/search/, function(c){
+	this.get("#/search/:model", function(c){
 
-        var model = this.splat(0);
+        var model = c.params['model'];
         
 		var template = main.view + model + "_search.tt";
 		this.process(template , {});
     });
 
 	// submit search form
-	this.post(/\#\/(artist|cd)\/search/, function(c){
+	this.post("#/search/:model", function(c){
 
-        var model = this.splat(0);
+        var model = c.params['model'];
         main.models[model].data = c.params.toHash();
 
 	    main.models[model].search();
@@ -161,7 +151,7 @@
 		if (main.models[model].errors.length) {
             alert("got errors");
         }
-		main.runRoute("get", "#/" + model);
+		c.redirect("#/list/" + model);
     });
 
 		
