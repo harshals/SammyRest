@@ -11,18 +11,17 @@ $.sammy("#content", function() {
 	this.after( function() {
 	
 		var args = this.path.split('/');
-		this.log(args);
+		//this.log(args);
 		var model = args[1];
-		this.log("runnign after every " + model + " -> " + this.path);
+		//this.log("runnign after every " + model + " -> " + this.path);
 	});
 
- 	this.get(/\#\/errors\/(\w+)$/, function(c) {
+ 	this.get(/\#\/(\w+)\/errors$/, function(c) {
 	
-		var model = c.splat(0);
+		var model = main.model;
 
         var template = main.view + "error.tt";
 
-		main.error("my customer Error" );
 		c.process(template, {errors : main.models[model].getErrors() });
     });
 

@@ -43,6 +43,18 @@
 		c.swap("Welcome to caselog from main");
 	});
 
+	this.before(function(c) {
+		
+		c.log("disecting " + c.path);
+
+		args = c.path.split('/');
+		args.shift();
+		main.model = args.shift();
+		main.action = args.shift();
+		main.args = args;
+	});
+
+
 	// index , generate list of all artist
 
 	this.get(/\#\/(artist|cd)$/, function(c) {
@@ -58,10 +70,10 @@
 
 	// get single item
 	
-	this.get(/\#\/(artist)\/edit\/(.*)/, function(c){
+	this.get(/\#\/(artist|cd)\/edit\/(\d+)$/, function(c){
         
-        var model = this.splat(0);
-        var id = this.splat(1);
+        var model = main.model;
+        var id = main.args[0];
 
         main.models[model].find(id);
         
@@ -74,61 +86,59 @@
 	
 	this.get(/\#\/(artist|cd)\/delete\/(\d+)$/, function(c){
         
-        var model = this.splat(0);
-        var id = this.splat(1);
+        var model = main.model;
+        var id = main.args[0];
 
         main.models[model].remove(id);
-/*
+
         if (!main.models[model].ajaxStatus) {
 
-			this.redirect("#/errors/" + model);
-			this.errors();
+			this.redirect("#/" + model + "/errors");
         }else {
 
 			this.redirect("#/" + model);
 		}
-*/
+
 	});
 
 	// new item
 	this.get(/\#\/(artist|cd)\/new/, function(c){
 		
-        var model = this.splat(0);
+        var model = main.model;
 
         var template = main.view + model + "_edit.tt";
 
 		this.process(template , {});
 	});
 
-	this.before({ only: {verb: 'post'}}, function(e ) {
+	
+	this.before({ only: {verb: 'post'}}, function(c ) {
 			
-			e.log("coming here 1st");
-			return true;
-	});
-
-
-	this.bind("check-form-submission", function(e, data) {
 		
-		$(data.form).validate();
-		if (!$(data.form).valid()) {
+		//c.target is form handle
+		$(c.target).validate();
+		if (!$(c.target).valid()) {
 
-			this.log("form is invald " + main.model );
-			//this.redirect("#/errors/" + main.model);
+			return false;
 		}
-	});
 
+		return true;
+	});
+	
 	// update or create single item
 	this.post(/\#\/(artist|cd)\/save/, function(c) {
 
-        main.model = this.splat(0);
+        var model = main.model 
         
-		c.log("coming here after");
-	    if (!main.models[main.model].save(c.params.toHash())) {
+	    if (!main.models[model].save(c.params.toHash())) {
 
-			this.redirect("#/errors/" + main.model);
+			this.redirect("#/errors/" + model);
 		}
+		
+		c.redirect("#/" + model);
 
-		main.runRoute("get", "#/" + main.model);
+		//main.runRoute("get", "#/" + main.model);
+		return false;
 	});
 
 	// display search form

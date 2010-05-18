@@ -45,7 +45,7 @@ Class('DbEntity', {
                             model.errors.push(json.messages);
                             model.data = json.data;
                             model.list = json.list;
-                            model.ajaxStatus = json.success;
+                            model.ajaxStatus = json.success || true;
                         }, 
                         error : function(req, textStatus, errorThrown) {
                             
