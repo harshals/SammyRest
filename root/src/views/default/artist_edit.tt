@@ -1,6 +1,6 @@
 	
 <h2> Edit  Artist No. [% artist.artistid %] ( [% message %] )</h2>
-<form action="#/artist/save" method="POST" >
+<form action="#/save/artist" method="POST" >
     <input type=hidden name=artistid value="[% artist.artistid %]">
     <div class="grid_5">
 	<fieldset class="login">

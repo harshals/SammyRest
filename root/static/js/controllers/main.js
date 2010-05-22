@@ -35,7 +35,18 @@
 	this.get("#/home", function(c){
 		
 
-        //initialize their templates
+        //initialize the models
+		//ideally this should be read from json
+
+		$.getJSON("static/js/schema.json", function(json) {
+			
+			$.each(json, function(model, obj) {
+				
+				c.log(model);
+				var CLASS = eval(obj['class']);
+				main.models[model] = new CLASS({ pk : obj['pk'],  url: main.baseUrl + model } );
+			});
+		});
 
 		c.swap("Welcome to caselog from main");
 	});
@@ -43,8 +54,7 @@
 	this.before(function(c) {
 		
         // initialize all the models here
-		main.models["artist"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "artist" });
-		main.models["cd"] = new Artist( { pk : 'artistid',  url: main.baseUrl + "cd" });
+		// visit me before every request
         
 	});
 
@@ -87,10 +97,9 @@
 
         if (!main.models[model].ajaxStatus) {
 
-			this.redirect("#/errors/" + model );
+			c.redirect("#/errors/" + model );
         }else {
-
-			this.redirect("#/list/" + model);
+			c.redirect("#/list/" + model);
 		}
 
 	});

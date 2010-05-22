@@ -40,20 +40,18 @@ Class('DbEntity', {
                         data : model.data,
                         dataType : 'json',
                         async : false,
-                        success : function(json) {
-                            
-                            model.errors.push(json.messages);
-                            model.data = json.data;
-                            model.list = json.list;
-                            model.ajaxStatus = json.success || true;
-                        }, 
-                        error : function(req, textStatus, errorThrown) {
-                            
-							model.ajaxStatus = false;
-                            var js = $.parseJSON(req.responseText);
-                            model.setErrors(js.messages);
+                        error : function(req, textStatus, ErrorThrown) {
+							  var js = $.parseJSON(req.responseText);
+							  model.onError(js);
+							  return false;
+						},
+						success : function(json) {
+
+							if (typeof(json) != 'undefined' && json != null) {
+
+								model.onSuccess(json) ;
+							}
                         }
-                        
                     });
 
 				}(this);
@@ -125,7 +123,21 @@ Class('DbEntity', {
 				
 				return this.errors;
 
-			}
+			},
+			onSuccess : function(json) {
+                            
+               this.setErrors(json.messages);
+               this.data = json.data;
+			   this.list = json.list;
+			   this.ajaxStatus = json.success || true;
+			},
+			onError : function(json) {
+                            
+				this.ajaxStatus = false;
+				if (typeof(json) != 'undefined' && json != null) {
+                      this.setErrors(json.messages);
+				}
+            }
 		}
 
 });

@@ -16,9 +16,9 @@
             <td>[% row.artistid %]</td>
             <td>[% row.name%]</td>
             <th >
-            <a href="#[% "/artist/delete/$row.artistid" %]">Del</a>
-            <a href="#[% "/artist/edit/$row.artistid" %]">Edit</a>
-            <a href="#[% "/artist/delete/99" %]">Del</a>
+            <a href="#[% "/delete/artist/$row.artistid" %]">Del</a>
+            <a href="#[% "/edit/artist/$row.artistid" %]">Edit</a>
+            <a href="#[% "/delete/artist/99" %]">Del</a>
             </th>
         </tr>
         [% END %]

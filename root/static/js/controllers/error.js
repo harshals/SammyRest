@@ -10,15 +10,12 @@ $.sammy("#content", function() {
 
 	this.after( function() {
 	
-		var args = this.path.split('/');
-		//this.log(args);
-		var model = args[1];
-		//this.log("runnign after every " + model + " -> " + this.path);
+		//visit me after every request
 	});
 
- 	this.get(/\#\/(\w+)\/errors$/, function(c) {
+ 	this.get("#/errors/:model", function(c) {
 	
-		var model = main.model;
+		var model = c.params['model'];
 
         var template = main.view + "error.tt";
 

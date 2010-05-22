@@ -1711,13 +1711,13 @@ output += stash.get(['artist', 0, 'artistid', 0]);
 output += ' ( ';
 //line 2 "views/default/artist_edit.tt"
 output += stash.get('message');
-output += ' )</h2>\n<form action="#/artist/save" method="POST" >\n    <input type=hidden name=artistid value="';
+output += ' )</h2>\n<form action="#/save/artist" method="POST" >\n    <input type=hidden name=artistid value="';
 //line 4 "views/default/artist_edit.tt"
 output += stash.get(['artist', 0, 'artistid', 0]);
-output += '">\n    <div class="grid_5">\n	<fieldset class="login">\n		<legend>Snapshot</legend>\n        <input class="email required" name="name" value="';
+output += '">\n    <div class="grid_5">\n	<fieldset class="login">\n		<legend>Snapshot</legend>\n        <input name="name" value="';
 //line 8 "views/default/artist_edit.tt"
 output += stash.get(['artist', 0, 'name', 0]);
-output += '">      \n    </fieldset>\n    </div>\n    <input type=submit value="Hit me"/>\n</form>\n';
+output += '" class="email required">      \n    </fieldset>\n    </div>\n    <input type=submit value="Hit me"/>\n</form>\n';
     }
     catch(e) {
         var error = context.set_error(e, output);
@@ -1757,13 +1757,13 @@ output += '</td>\n            <td>';
 output += stash.get(['row', 0, 'name', 0]);
 output += '</td>\n            <th >\n            <a href="#';
 //line 1 "views/default/artist_list.tt"
-output += '/artist/delete/' + stash.get(['row', 0, 'artistid', 0]);
+output += '/delete/artist/' + stash.get(['row', 0, 'artistid', 0]);
 output += '">Del</a>\n            <a href="#';
 //line 1 "views/default/artist_list.tt"
 output += '/edit/artist/' + stash.get(['row', 0, 'artistid', 0]);
 output += '">Edit</a>\n            <a href="#';
 //line 21 "views/default/artist_list.tt"
-output += '/artist/delete/99';
+output += '/delete/artist/99';
 output += '">Del</a>\n            </th>\n        </tr>\n        ';;
             retval = list.get_next();
             value = retval[0];

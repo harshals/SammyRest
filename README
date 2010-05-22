@@ -1,5 +1,9 @@
-Demo application Using Catalyst + Sammy + Jemplate + Joose 
 
+Summary :
+Demo CRUD application Using Catalyst + Sammy + Jemplate + Joose 
+
+
+Install:
 Application DB is described in  schema.sql
 
 You can use the test server by installing - 
@@ -7,6 +11,8 @@ You can use the test server by installing -
 Task::Catalyst (http://search.cpan.org/~flora/Task-Catalyst-4.00/)
 Catalyst::Controller::DBIC::API (http://search.cpan.org/~flora/Catalyst-Controller-DBIC-API-2.002001/)
 
+
+Run:
 Run script/resttest_server.pl to test the application.
 
 or 
@@ -29,3 +35,21 @@ Each request returns a JSON object which may have following keys
 
 <tablename> can be artist, cd,track.
 <id> is primary key
+
+Templates :
+
+the most boring task is to write HTML . well you will need following templates per table -
+
+root/src/<tablename>/form 	: Blocks containing form elements
+root/src/<tablename>/row	: Display single row
+
+these base templates are then imported by higher level templates (only these templates are exposed to Sammy ) in -
+
+root/src/views/<view_name>/<tablename>_form.tt 	: complete form
+root/src/views/<view_name>/<tablename>_list.tt	: complete table
+root/src/views/<view_name>/<tablename>_<custom>.tt	: whatever you want to display
+
+
+Notes :
+
+1. Change controllers/main.js to initialise models

@@ -1,0 +1,2 @@
+{ "artist" : { "pk" : "artistid" , "class" : "Artist" },
+ 	"cd" : { "pk" : "cd" , "class" : "Cd" }}
