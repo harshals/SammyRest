@@ -71,7 +71,7 @@
 
 
 
-	// index , generate list of all artist
+	// index , generate list of all 
 
 	this.get("#/list/:model", function(c) {
 		
@@ -124,7 +124,7 @@
 	});
 
 	// new item
-	this.get("#/new/:model/:id", function(c){
+	this.get("#/new/:model", function(c){
 		
         var model = c.params['model'];
 
