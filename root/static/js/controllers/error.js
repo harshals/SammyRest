@@ -8,11 +8,6 @@ $.sammy("#content", function() {
 	},
 */
 
-	this.after( function() {
-	
-		//visit me after every request
-	});
-
  	this.get("#/errors/:model", function(c) {
 	
 		var model = c.params['model'];

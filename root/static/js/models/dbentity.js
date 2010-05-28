@@ -119,11 +119,6 @@ Class('DbEntity', {
 
                 return tvars;
             },
-			list_errors : function() {
-				
-				return this.errors;
-
-			},
 			onSuccess : function(json) {
                             
                this.setErrors(json.messages);
@@ -136,8 +131,12 @@ Class('DbEntity', {
 				this.ajaxStatus = false;
 				if (typeof(json) != 'undefined' && json != null) {
                       this.setErrors(json.messages);
+				}else {
+					// assuming network is down
+					//  jquery bug ??
+					this.setErrors(["Could not reach the server. Please check your network connection!!"]);
 				}
-            }
+            },
 		}
 
 });

@@ -20,6 +20,9 @@
 	 this.model = "";
      this.view = "views/default/";
      this.tvars = {};
+	 this.success = true;
+	 this.template = null;
+	 this.templateVars = {};
 
 
 	
@@ -56,7 +59,16 @@
         // initialize all the models here
 		// visit me before every request
         
+		this.success = true;
+		this.template = null;
 	});
+
+	this.after( function(c) {
+	
+		//visit me after every request
+		// c.path is not available ???
+	});
+
 
 
 	// index , generate list of all artist
@@ -67,23 +79,32 @@
 
         var template = main.view + model + "_list.tt";
 
-        main.models[model].all();
+      	if(main.models[model].all()) {
+		
+			c.process(template, main.models[model].templateVars("list") );
+		}else {
+		
+			c.redirect("#/errors/" + model );
+		};
 
-		this.process(template, main.models[model].templateVars("list") );
 	});
 
 	// get single item
 	
 	this.get("#/edit/:model/:id", function(c){
         
-        var model = c.params['model'];
-        var id = c.params['id'];
+        var model 		= c.params['model'];
+        var id 			= c.params['id'];
+        var template 	= main.view + model + "_edit.tt";
 
-        main.models[model].find(id);
-        
-        var template = main.view + model + "_edit.tt";
+ 	 	if(main.models[model].find(id) ) {
 		
-		this.process(template , main.models[model].templateVars("edit") );
+			c.process(template , main.models[model].templateVars("edit"));
+		}else {
+
+			c.redirect("#/errors/" + model );
+		}
+			
 	});
 
 	// delete single item
@@ -93,9 +114,7 @@
         var model = c.params['model'];
         var id = c.params['id'];
 
-        main.models[model].remove(id);
-
-        if (!main.models[model].ajaxStatus) {
+        if (confirm("Are you sure ?") && !main.models[model].remove(id)) {
 
 			c.redirect("#/errors/" + model );
         }else {
@@ -133,10 +152,12 @@
         
 	    if (!main.models[model].save(c.params.toHash())) {
 
-			this.redirect("#/errors/" + model);
+			c.redirect("#/errors/" + model);
+		}else {
+
+			c.redirect("#/list/" + model);
 		}
 		
-		c.redirect("#/list/" + model);
 		return false;
 	});
 
