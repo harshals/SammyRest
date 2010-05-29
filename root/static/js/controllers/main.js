@@ -35,6 +35,7 @@
 		}
 
 	});
+
 	this.get("#/home", function(c){
 		
 
@@ -86,7 +87,7 @@
 		
 			c.redirect("#/errors/" + model );
 		};
-
+		c.render();
 	});
 
 	// get single item
@@ -104,7 +105,7 @@
 
 			c.redirect("#/errors/" + model );
 		}
-			
+		c.render();
 	});
 
 	// delete single item

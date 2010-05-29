@@ -180,28 +180,221 @@ Jemplate.templateMap['artist/select.tt'] = function(context) {
     var output = '';
 
     try {
-//line 7 "artist/select.tt"
+//line 5 "artist/select.tt"
+
+// FOREACH 
+(function() {
+    var list = stash.get(['artist', 0, 'list', 0]);
+    list = new Jemplate.Iterator(list);
+    var retval = list.get_first();
+    var value = retval[0];
+    var done = retval[1];
+    var oldloop;
+    try { oldloop = stash.get('loop') } finally {}
+    stash.set('loop', list);
+    try {
+        while (! done) {
+            stash.data['artist'] = value;
+output += '\n    <option value="';
+//line 2 "artist/select.tt"
+output += stash.get(['artist', 0, 'id', 0]);
+output += '" ';
+//line 2 "artist/select.tt"
+if (stash.get(['artist', 0, 'id', 0]) == stash.get('match')) {
+output += ' selected ';
+}
+
+output += '>\n        ';
+//line 3 "artist/select.tt"
+output += stash.get(['artist', 0, 'name', 0]);
+output += '\n	</option>\n';;
+            retval = list.get_next();
+            value = retval[0];
+            done = retval[1];
+        }
+    }
+    catch(e) {
+        throw(context.set_error(e, output));
+    }
+    stash.set('loop', oldloop);
+})();
+
+output += '\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/detail.tt'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '<table id="company" class="shortlist">\n		<thead>\n			<tr>\n				<th colspan="2" class="table-head"> <a href="#" id="toggle-forms">JJ Polyplast Inc</a>\n				</th>\n			</tr>\n		</thead>\n		<tbody>\n		<tr>\n			<th>Office Address</th>\n			<td >418 Arun Chambers, Tardeo, Mumbai 36</td>\n		</tr>\n		<tr>\n			<th>Contact Person</th>\n			<td >Harshal Shah</td>\n		</tr>\n		<tr>\n			<th>Contact No.</th>\n			<td >98323123012</td>\n		</tr>\n		<tr>\n			<th>Outstanding</th>\n			<td class="currency">12312364.00</td>\n		</tr>\n		<tr>\n			<th>Overdue by</th>\n			<td >30 days</td>\n		</tr>\n		</tbody>\n		<tfoot>\n			<tr >\n				<td colspan=2> <button class="button" >Print </button> \n				<button class="button" type=submit >Open</button>\n				<button class="button" type=submit >Email</button></td>\n			</tr>\n			<tr >\n				<td colspan=2><span class="help">Make Sale from this Invoice</span></th>\n			</tr>\n			<tr >\n				<td colspan=2><span class="help">Show Sales made from this Invoice</span></th>\n			</tr>\n			<tr >\n				<td colspan=2><span class="help">Duplicate this Invoice</span></th>\n			</tr>\n		</tfoot>\n</table>\n\n\n\n\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/form.tt'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '\n';
+
+output += '\n\n';
+
+output += '\n\n';
+
+output += '\n\n';
+
+output += '\n\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/form/b1'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '\n	<p>\n        <label>Title: </label>\n        <input type="text" name="title" value="';
+//line 10 "cd/form.tt"
+output += stash.get(['cd', 0, 'title', 0]);
+output += '" class="required"/>\n    </p>\n    <p>\n        <label>Year: </label>\n        <input type="text" name="year" value="';
+//line 14 "cd/form.tt"
+output += stash.get(['cd', 0, 'year', 0]);
+output += '" class="required number"/>\n    </p>\n\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/form/b2'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '\n    <p>\n        <label>Artist: </label>\n        <input type="text" name="artist" value="';
+//line 22 "cd/form.tt"
+output += stash.get(['cd', 0, 'artist', 0]);
+output += '" class="required"/>\n    </p>\n\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/form/b3'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '\n    <p>\n        <label>Artist: </label>\n        <select name="artist" value="';
+//line 30 "cd/form.tt"
+output += stash.get(['cd', 0, 'artist', 0]);
+output += '" class="required">\n			';
+//line 31 "cd/form.tt"
+output += context.process('artist/select.tt', { 'match': stash.get(['cd', 0, 'artist', 0]) });
+output += '\n		</select>\n    </p>\n\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/form/hidden'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '\n\n	<input type=hidden name="cdid" value="';
+//line 4 "cd/form.tt"
+output += stash.get(['cd', 0, 'cdid', 0]);
+output += '"/>\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/list.tt'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['cd/select.tt'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+//line 7 "cd/select.tt"
 if (stash.get('type') == 'ALL') {
 output += '\n    ';
-//line 2 "artist/select.tt"
+//line 2 "cd/select.tt"
 stash.set('company_rs', stash.get(['c', 0, 'model', [ 'DemoDB::Company' ], 'all', 0]));
 output += '\n';
 }
 else if (stash.get('type') == 'SUPPLIER') {
 output += '\n    ';
-//line 4 "artist/select.tt"
+//line 4 "cd/select.tt"
 stash.set('company_rs', stash.get(['c', 0, 'model', [ 'DemoDB::Company' ], 'suppliers', 0]));
 output += '\n';
 }
 else {
 output += '\n    ';
-//line 6 "artist/select.tt"
+//line 6 "cd/select.tt"
 stash.set('company_rs', stash.get(['c', 0, 'model', [ 'DemoDB::Company' ], 'buyers', 0]));
 output += '\n';
 }
 
 output += '\n';
-//line 12 "artist/select.tt"
+//line 12 "cd/select.tt"
 
 // FOREACH 
 (function() {
@@ -217,16 +410,16 @@ output += '\n';
         while (! done) {
             stash.data['company'] = value;
 output += '\n    <option value="';
-//line 9 "artist/select.tt"
+//line 9 "cd/select.tt"
 output += stash.get(['company', 0, 'id', 0]);
 output += '" ';
-//line 9 "artist/select.tt"
+//line 9 "cd/select.tt"
 if (stash.get(['company', 0, 'id', 0]) == stash.get('match')) {
 output += ' selected ';
 }
 
 output += '>\n        ';
-//line 10 "artist/select.tt"
+//line 10 "cd/select.tt"
 output += stash.get(['company', 0, 'name', 0]);
 output += '\n</option>\n';;
             retval = list.get_next();
@@ -1786,6 +1979,105 @@ output += '\n    </tbody>\n</table>\n\n';
     return output;
 }
 
+Jemplate.templateMap['views/default/cd_edit.tt'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '	\n\n';
+//line 3 "views/default/cd_edit.tt"
+output += context.include('cd/form.tt');
+output += '\n';
+//line 4 "views/default/cd_edit.tt"
+output += context.include('artist/select.tt');
+output += '\n\n<h2> Edit  CD No. ';
+//line 6 "views/default/cd_edit.tt"
+output += stash.get(['cd', 0, 'cdid', 0]);
+output += ' ( ';
+//line 6 "views/default/cd_edit.tt"
+output += stash.get('message');
+output += ' )</h2>\n<form action="#/save/cd" method="POST" >\n	\n	';
+//line 9 "views/default/cd_edit.tt"
+output += context.process('cd/form/hidden');
+output += '\n    <div class="grid_5">\n	<fieldset class="login">\n		<legend>Snapshot</legend>\n		';
+//line 13 "views/default/cd_edit.tt"
+output += context.process('cd/form/b1');
+output += '\n    </fieldset>\n    </div>\n    <div class="grid_6">\n	<fieldset class="">\n		<legend>Artist</legend>\n		';
+//line 19 "views/default/cd_edit.tt"
+output += context.process('cd/form/b3');
+output += '\n    </fieldset>\n    </div>\n    <input type=submit value="Hit me"/>\n</form>\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
+Jemplate.templateMap['views/default/cd_list.tt'] = function(context) {
+    if (! context) throw('Jemplate function called without context\n');
+    var stash = context.stash;
+    var output = '';
+
+    try {
+output += '<table >\n    <thead>\n        <tr>\n            <th colspan="7" class="table-head">List of Cds</th>\n        </tr>\n\n        <tr>\n            <th>Id</th>\n            <th>Title</th>\n            <th>Artist</th>\n            <th>Year</th>\n            <th>Action</th>\n        </tr>\n    </thead>\n    <tbody>\n        ';
+//line 27 "views/default/cd_list.tt"
+
+// FOREACH 
+(function() {
+    var list = stash.get(['cd', 0, 'list', 0]);
+    list = new Jemplate.Iterator(list);
+    var retval = list.get_first();
+    var value = retval[0];
+    var done = retval[1];
+    var oldloop;
+    try { oldloop = stash.get('loop') } finally {}
+    stash.set('loop', list);
+    try {
+        while (! done) {
+            stash.data['row'] = value;
+output += '\n        <tr>\n            <td>';
+//line 18 "views/default/cd_list.tt"
+output += stash.get(['row', 0, 'cdid', 0]);
+output += '</td>\n            <td>';
+//line 19 "views/default/cd_list.tt"
+output += stash.get(['row', 0, 'title', 0]);
+output += '</td>\n            <td>';
+//line 20 "views/default/cd_list.tt"
+output += stash.get(['row', 0, 'artist', 0]);
+output += '</td>\n            <td>';
+//line 21 "views/default/cd_list.tt"
+output += stash.get(['row', 0, 'year', 0]);
+output += '</td>\n            <th >\n            <a href="#';
+//line 1 "views/default/cd_list.tt"
+output += '/delete/cd/' + stash.get(['row', 0, 'cdid', 0]);
+output += '">Del</a>\n            <a href="#';
+//line 1 "views/default/cd_list.tt"
+output += '/edit/cd/' + stash.get(['row', 0, 'cdid', 0]);
+output += '">Edit</a>\n            </th>\n        </tr>\n        ';;
+            retval = list.get_next();
+            value = retval[0];
+            done = retval[1];
+        }
+    }
+    catch(e) {
+        throw(context.set_error(e, output));
+    }
+    stash.set('loop', oldloop);
+})();
+
+output += '\n    </tbody>\n</table>\n\n';
+    }
+    catch(e) {
+        var error = context.set_error(e, output);
+        throw(error);
+    }
+
+    return output;
+}
+
 Jemplate.templateMap['views/default/error.tt'] = function(context) {
     if (! context) throw('Jemplate function called without context\n');
     var stash = context.stash;
@@ -1943,55 +2235,6 @@ output += '\n				<div class="box" > <!-- begin form box -->\n					<div class="bo
 //line 45 "views/default/reset.tt"
 output += context.include('footer');
 output += '\n			</div>\n			<div class="clear"></div>\n		</div>\n	</body>\n</html>\n';
-    }
-    catch(e) {
-        var error = context.set_error(e, output);
-        throw(error);
-    }
-
-    return output;
-}
-
-Jemplate.templateMap['views/default/sale_list.tt'] = function(context) {
-    if (! context) throw('Jemplate function called without context\n');
-    var stash = context.stash;
-    var output = '';
-
-    try {
-output += '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n	<head>\n\n		';
-//line 5 "views/default/sale_list.tt"
-output += context.process('head', { 'title': 'Sale List ' });
-output += '\n\n		<script language="javascript">\n\n		';
-//line 10 "views/default/sale_list.tt"
-output += context.include('js');
-output += '\n\n		';
-//line 12 "views/default/sale_list.tt"
-output += context.process('sale/js', { 'tmpl': 'list' });
-output += '\n\n		 </script>\n\n	</head>\n	<body>\n		<div class="container_16">\n			\n			<div class="clear"></div>\n			<div class="grid_4 sidebar">\n\n				';
-//line 25 "views/default/sale_list.tt"
-output += context.include('logo');
-output += '	\n\n           	<div class="block"> <!-- sidebar form container -->\n					\n					';
-//line 29 "views/default/sale_list.tt"
-output += context.include('sale/search');
-output += '\n					\n					';
-//line 31 "views/default/sale_list.tt"
-output += context.include('sale/detail');
-output += '\n					\n					';
-//line 33 "views/default/sale_list.tt"
-output += context.include('company/detail');
-output += '\n					\n					';
-//line 35 "views/default/sale_list.tt"
-output += context.include('product/detail');
-output += '\n\n			</div>	<!-- sidebar form container-->\n\n\n			</div><!-- grid_4 -->\n			<div class="grid_12 mainbar" >\n\n				';
-//line 43 "views/default/sale_list.tt"
-output += context.include('menu');
-output += '\n				<div class="box" id="content"> <!-- begin form box -->\n					\n					';
-//line 46 "views/default/sale_list.tt"
-output += context.include('sale/list');
-output += '\n\n				</div>\n			</div>\n				\n			<div class="clear"></div>\n			<div class="grid_16" id="site_info">\n\n				';
-//line 54 "views/default/sale_list.tt"
-output += context.include('footer');
-output += '\n			</div>\n			<div class="clear"></div>\n		</div>\n			</body>\n</html>\n';
     }
     catch(e) {
         var error = context.set_error(e, output);

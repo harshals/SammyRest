@@ -8,8 +8,17 @@ var utils = function(app) {
 			return this.params.splat[index]
 		},
 		process: function(path, data) {
-	  
-			Jemplate.process(path, data || this ,app.element_selector);
+	  		
+			$.extend(main.templateVars, data || this);
+			main.template = path;
+
+			//Jemplate.process(path, data || this ,app.element_selector);
+		},
+		render : function() {
+			
+			var templateVars = main.templateVars;
+
+			Jemplate.process(main.template, templateVars);
 		}
   	});
 
