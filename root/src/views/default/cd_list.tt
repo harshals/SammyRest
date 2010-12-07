@@ -1,0 +1,30 @@
+<table >
+    <thead>
+        <tr>
+            <th colspan="7" class="table-head">List of Cds</th>
+        </tr>
+
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Year</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        [% FOREACH row IN cd.list %]
+        <tr>
+            <td>[% row.cdid %]</td>
+            <td>[% row.title %]</td>
+            <td>[% row.artist%]</td>
+            <td>[% row.year %]</td>
+            <th >
+            <a href="#[% "/delete/cd/$row.cdid" %]">Del</a>
+            <a href="#[% "/edit/cd/$row.cdid" %]">Edit</a>
+            </th>
+        </tr>
+        [% END %]
+    </tbody>
+</table>
+

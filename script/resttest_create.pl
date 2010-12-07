@@ -25,17 +25,20 @@ resttest_create.pl [options] model|view|controller name [helper] [options]
    resttest_create.pl controller My::Controller
    resttest_create.pl -mechanize controller My::Controller
    resttest_create.pl view My::View
-   resttest_create.pl view MyView TT
-   resttest_create.pl view TT TT
+   resttest_create.pl view HTML TT
    resttest_create.pl model My::Model
    resttest_create.pl model SomeDB DBIC::Schema MyApp::Schema create=dynamic\
    dbi:SQLite:/tmp/my.db
    resttest_create.pl model AnotherDB DBIC::Schema MyApp::Schema create=static\
-   dbi:Pg:dbname=foo root 4321
+   [Loader opts like db_schema, naming] dbi:Pg:dbname=foo root 4321
+   [connect_info opts like quote_char, name_sep]
 
  See also:
    perldoc Catalyst::Manual
    perldoc Catalyst::Manual::Intro
+   perldoc Catalyst::Helper::Model::DBIC::Schema
+   perldoc Catalyst::Model::DBIC::Schema
+   perldoc Catalyst::View::TT
 
 =head1 DESCRIPTION
 

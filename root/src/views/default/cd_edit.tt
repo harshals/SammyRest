@@ -1,0 +1,23 @@
+	
+
+[% INCLUDE cd/form.tt %]
+[% INCLUDE artist/select.tt %]
+
+<h2> Edit  CD No. [% cd.cdid %] ( [% message %] )</h2>
+<form action="#/save/cd" method="POST" >
+	
+	[% PROCESS cd/form/hidden %]
+    <div class="grid_5">
+	<fieldset class="login">
+		<legend>Snapshot</legend>
+		[% PROCESS cd/form/b1 %]
+    </fieldset>
+    </div>
+    <div class="grid_6">
+	<fieldset class="">
+		<legend>Artist</legend>
+		[% PROCESS cd/form/b3 %]
+    </fieldset>
+    </div>
+    <input type=submit value="Hit me"/>
+</form>

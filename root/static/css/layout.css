@@ -4,23 +4,25 @@ Grey Box Method - Layout CSS
 ----------------------------------------------- */
 
 body {
-	background: #eee;
+	background: #fff;
 	border-top: 5px solid #000;
-	color: #333;
-	font-size: 11px;
+	color: #444;
 	padding: 0 0 40px;
+	font: .85em Arial, Helvetica, sans-serif;
+	line-height: 1.6em;
 }
 
 
 /* anchors
 ----------------------------------------------- */
 a {
-	color: #000;
-	font-weight:bold;
-	text-decoration: none;
+	background: transparent;
+	color: #4896AC;
 }
 a:hover {
-	color: #333;
+	background: transparent;
+	color: #69ab24;
+	text-decoration: none;
 }
 
 
@@ -34,15 +36,42 @@ a:hover {
 
 /* headings
 ----------------------------------------------- */
-h1, h2, h3, h4, h5, h6 {line-height:1.2em; margin-bottom:.3em;}
-h2 {margin-top:1em;}
-h5 {font-size:1.2em;}
-h6 {font-size:1em; text-transform:uppercase;}
-
-
-h1 a {
-	font-weight:normal;
+h1 {
+	color: #5c5c5c;
+	letter-spacing: -1px;
+	margin: 15px 0 0;
+	a {
+		background: inherit;
+		color: #5c5c5c;
+		text-decoration: none;
+	}
 }
+h1 
+img {
+	border: 0;
+}
+h2 {
+	color: #7cc92d;
+	font-size: 1.8em;
+	letter-spacing: -1px;
+	margin: 0 0 12px;
+	a {
+	color: #7cc92d;
+	text-decoration: none;
+	}
+}
+h2 
+h3 {
+	color: #666;
+
+a {
+	color: #47A4BE;
+	font-size: 1em;
+	text-decoration: none;
+}
+}
+
+
 
 
 /* branding
@@ -74,42 +103,8 @@ h2#page-heading {
 	margin-bottom:20px;
 	padding:10px 10px 1px 10px;
 }
-.box h2 {
-	font-size:1em;
-	font-weight:normal;
-	text-transform:uppercase;
-	color:#fff;
-	background:#333;
-	margin:-10px -10px 0 -10px;
-	padding:6px 12px;
-}
-.box h2 a,
-.box h2 a.visible {
-	color:#fff;
-	background:#333 url("../img/switch_minus.gif") 97% 50% no-repeat;
-	display:block;
-	padding:6px 12px;
-	margin:-6px -12px;
-	border:none;
-}
-.grid_4 .box h2 a {
-	background-position: 97% 50%;
-}
-.grid_5 .box h2 a {
-	background-position: 98% 50%;
-}
-.grid_12 .box h2 a {
-	background-position: 99% 50%;
-}
 
 
-.box h2 a.hidden,
-.box h2 a.hidden:hover {
-	background-image: url("../img/switch_plus.gif");
-}
-.box h2 a:hover {
-	background-color:#111;
-}
 .block {
 	padding-top:10px;
 }
@@ -127,13 +122,20 @@ div.menu .block {
 /* paragraphs, quotes and lists
 ----------------------------------------------- */
 p {
-	margin-bottom:1em;
+	margin: 0 0 15px 0;
+	.border
+	{
+		border-left: 4px solid #ccc;
+		clear: both;
+		padding: 0 0 0 15px;
+	}
 }
 blockquote {
 	font-family: Georgia, 'Times New Roman', serif;
 	font-size:1.2em;
 	padding-left:1em;
 	border-left:4px solid #ccc;
+
 }
 blockquote cite {
 	font-size:.9em;

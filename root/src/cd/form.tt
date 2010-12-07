@@ -1,0 +1,37 @@
+
+[% BLOCK "cd/form/hidden" %]
+
+	<input type=hidden name="cdid" value="[% cd.cdid %]"/>
+[% END %]
+
+[% BLOCK "cd/form/b1" %]
+	<p>
+        <label>Title: </label>
+        <input type="text" name="title" value="[% cd.title %]" class="required"/>
+    </p>
+    <p>
+        <label>Year: </label>
+        <input type="text" name="year" value="[% cd.year %]" class="required number"/>
+    </p>
+
+[% END %]
+
+[% BLOCK "cd/form/b2" %]
+    <p>
+        <label>Artist: </label>
+        <input type="text" name="artist" value="[% cd.artist %]" class="required"/>
+    </p>
+
+[% END %]
+
+[% BLOCK "cd/form/b3" %]
+    <p>
+        <label>Artist: </label>
+        <select name="artist" value="[% cd.artist %]" class="required">
+			[% PROCESS artist/select.tt 
+			 	match = cd.artist %]
+		</select>
+    </p>
+
+[% END %]
+

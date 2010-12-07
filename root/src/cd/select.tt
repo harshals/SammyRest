@@ -1,0 +1,12 @@
+[% IF type == 'ALL' %]
+    [% company_rs = c.model("DemoDB::Company").all %]
+[% ELSIF type == 'SUPPLIER' %]
+    [% company_rs = c.model("DemoDB::Company").suppliers %]
+[% ELSE %]
+    [% company_rs = c.model("DemoDB::Company").buyers %]
+[% END %]
+[% FOREACH company IN  company_rs %]
+    <option value="[% company.id %]" [% IF company.id == match %] selected [% END %]>
+        [% company.name %]
+</option>
+[% END %]
